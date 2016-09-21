@@ -1,0 +1,34 @@
+// Define versions in a single place
+ext {
+    // Manifest version information!
+    def versionMajor = 0
+    def versionMinor = 1
+    def versionPatch = 0
+    def versionBuild = 0 // bump for dogfood builds, public betas, etc.
+
+    versionCode = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+    versionName = "${versionMajor}.${versionMinor}.${versionPatch}-${versionBuild}"
+
+    versions = [
+            // App
+            code:   versionCode,
+            name:   "${versionName}",
+
+            // Sdk and tools
+            minSdk:     16,
+            targetSdk:  24,
+            compileSdk: 24,
+            buildTools: '24.0.1',
+
+            // Libs
+            support:            '24.2.1',
+
+            junit:              '4.12'
+    ]
+
+    libs = [
+            appcompat:           "com.android.support:appcompat-v7:${versions.support}",
+
+            junit:               "junit:junit:${versions.junit}"
+    ]
+}
