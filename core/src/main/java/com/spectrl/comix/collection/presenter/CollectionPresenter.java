@@ -1,6 +1,7 @@
 package com.spectrl.comix.collection.presenter;
 
 import com.spectrl.comix.collection.data.model.Comic;
+import com.spectrl.comix.collection.data.store.ComicsRepository;
 import com.spectrl.comix.presenter.BasePresenter;
 
 import static com.spectrl.comix.collection.view.CollectionContract.CollectionInteractionListener;
@@ -12,8 +13,11 @@ import static com.spectrl.comix.collection.view.CollectionContract.CollectionVie
 
 public class CollectionPresenter extends BasePresenter<CollectionView> implements CollectionInteractionListener {
 
-    public CollectionPresenter(CollectionView view) {
+    private final ComicsRepository comicsRepository;
+
+    public CollectionPresenter(CollectionView view, ComicsRepository comicsRepository) {
         super(view);
+        this.comicsRepository = comicsRepository;
     }
 
     @Override
