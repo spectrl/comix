@@ -27,7 +27,9 @@ ext {
             support:            '24.2.1',
             dagger:             '2.7',
 
-            junit:              '4.12'
+            junit:              '4.12',
+            mockito:            '2.1.0-RC.1',
+            truth:              '0.30'
     ]
 
     gradlePlugins = [
@@ -40,6 +42,8 @@ ext {
             dagger:              "com.google.dagger:dagger:${versions.dagger}",
             daggerCompiler:      "com.google.dagger:dagger-compiler:${versions.dagger}",
 
-            junit:               "junit:junit:${versions.junit}"
+            junit:               "junit:junit:${versions.junit}",
+            mockito:             "org.mockito:mockito-core:${versions.mockito}",
+            truth:               "com.google.truth:truth:${versions.truth}"
     ]
 }
