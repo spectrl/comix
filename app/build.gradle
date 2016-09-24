@@ -49,9 +49,13 @@ dependencies {
     def libs = rootProject.ext.libs
 
     compile libs.appcompat
+    compile libs.recyclerview
 
     compile libs.dagger
     apt libs.daggerCompiler
+
+    compile libs.butterknife
+    apt libs.butterknifeCompiler
 
     testCompile libs.junit
 
