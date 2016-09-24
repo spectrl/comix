@@ -1,7 +1,9 @@
-package com.spectrl.comix;
+package com.spectrl.comix.collection;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.spectrl.comix.R;
 
 public class CollectionActivity extends AppCompatActivity {
 

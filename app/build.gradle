@@ -49,6 +49,7 @@ dependencies {
     def libs = rootProject.ext.libs
 
     compile libs.appcompat
+    compile libs.recyclerview
 
     compile libs.dagger
     apt libs.daggerCompiler
