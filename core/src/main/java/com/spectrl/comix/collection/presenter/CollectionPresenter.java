@@ -31,11 +31,12 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     }
 
     @Override
-    public void onComicChosen(Comic comic) {
-        // TODO: 22/09/2016 Open Comic details Activity using Navigator
+    public void refreshComics() {
+        // TODO: 22/09/2016 Fetch from repo
     }
 
-    private void fetchComics() {
-        // TODO: 22/09/2016 Fetch from repo
+    @Override
+    public void onComicChosen(Comic comic) {
+        // TODO: 22/09/2016 Open Comic details Activity using Navigator
     }
 }

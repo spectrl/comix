@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface ComicsRepository {
 
-    // TODO: 22/09/2016 Rx-ify
+    // TODO: 22/09/2016 Rx-ify (make async)
     List<Comic> fetchComics();
 }

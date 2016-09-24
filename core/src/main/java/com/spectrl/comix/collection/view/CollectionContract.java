@@ -15,10 +15,14 @@ public interface CollectionContract {
 
         void displayComics(List<Comic> comics);
 
+        void setProgressIndicator(boolean active);
+
         // TODO: 22/09/2016 Error state
     }
 
     interface CollectionInteractionListener extends View.InteractionListener {
+
+        void refreshComics();
 
         void onComicChosen(Comic comic);
     }
