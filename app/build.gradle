@@ -54,6 +54,9 @@ dependencies {
     compile libs.dagger
     apt libs.daggerCompiler
 
+    compile libs.butterknife
+    apt libs.butterknifeCompiler
+
     testCompile libs.junit
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
