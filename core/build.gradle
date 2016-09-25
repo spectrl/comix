@@ -1,9 +1,33 @@
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        def plugin = rootProject.ext.gradlePlugins
+
+        classpath plugin.apt
+    }
+}
+
 apply plugin: 'java'
+apply plugin: 'net.ltgt.apt'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     def libs = rootProject.ext.libs
+
+    compileOnly libs.autoValue
+    apt         libs.autoValue
+
+    compile libs.moshi
+    compile libs.retrofit
+    compile libs.moshiConverter
+
+    apt libs.autoValueMoshi
+    compileOnly libs.autoValueMoshi
+
+    compile libs.rxJava
 
     testCompile libs.junit
     testCompile libs.mockito
