@@ -22,10 +22,14 @@ dependencies {
 
     compile libs.moshi
     compile libs.retrofit
+    compile libs.retrofitRxJavaAdapter
     compile libs.moshiConverter
 
     apt libs.autoValueMoshi
     compileOnly libs.autoValueMoshi
+
+    compile libs.dagger
+    apt libs.daggerCompiler
 
     compile libs.rxJava
 

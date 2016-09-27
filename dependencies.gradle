@@ -45,25 +45,26 @@ ext {
     ]
 
     libs = [
-            appcompat:           "com.android.support:appcompat-v7:${versions.support}",
-            recyclerview:        "com.android.support:recyclerview-v7:${versions.support}",
+            appcompat:             "com.android.support:appcompat-v7:${versions.support}",
+            recyclerview:          "com.android.support:recyclerview-v7:${versions.support}",
 
-            dagger:              "com.google.dagger:dagger:${versions.dagger}",
-            daggerCompiler:      "com.google.dagger:dagger-compiler:${versions.dagger}",
+            dagger:                "com.google.dagger:dagger:${versions.dagger}",
+            daggerCompiler:        "com.google.dagger:dagger-compiler:${versions.dagger}",
 
-            butterknife:         "com.jakewharton:butterknife:${versions.butterknife}",
-            butterknifeCompiler: "com.jakewharton:butterknife-compiler:${versions.butterknife}",
+            butterknife:           "com.jakewharton:butterknife:${versions.butterknife}",
+            butterknifeCompiler:   "com.jakewharton:butterknife-compiler:${versions.butterknife}",
 
-            autoValue:           "com.google.auto.value:auto-value:${versions.autoValue}",
-            retrofit:            "com.squareup.retrofit2:retrofit:${versions.retrofit}",
-            moshiConverter:      "com.squareup.retrofit2:converter-moshi:${versions.retrofit}",
-            moshi:               "com.squareup.moshi:moshi:${versions.moshi}",
-            autoValueMoshi:      "com.ryanharter.auto.value:auto-value-moshi:${versions.autoValueMoshi}",
+            autoValue:             "com.google.auto.value:auto-value:${versions.autoValue}",
+            retrofit:              "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+            retrofitRxJavaAdapter: "com.squareup.retrofit2:adapter-rxjava:${versions.retrofit}",
+            moshiConverter:        "com.squareup.retrofit2:converter-moshi:${versions.retrofit}",
+            moshi:                 "com.squareup.moshi:moshi:${versions.moshi}",
+            autoValueMoshi:        "com.ryanharter.auto.value:auto-value-moshi:${versions.autoValueMoshi}",
 
-            rxJava:              "io.reactivex:rxjava:${versions.rxJava}",
+            rxJava:                "io.reactivex:rxjava:${versions.rxJava}",
 
-            junit:               "junit:junit:${versions.junit}",
-            mockito:             "org.mockito:mockito-core:${versions.mockito}",
-            truth:               "com.google.truth:truth:${versions.truth}"
+            junit:                 "junit:junit:${versions.junit}",
+            mockito:               "org.mockito:mockito-core:${versions.mockito}",
+            truth:                 "com.google.truth:truth:${versions.truth}"
     ]
 }
