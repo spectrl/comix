@@ -1,7 +1,7 @@
 package com.spectrl.comix.collection.data.repository;
 
+import com.spectrl.comix.api.MarvelService;
 import com.spectrl.comix.collection.data.model.Comic;
-import com.spectrl.comix.collection.data.repository.source.ComicService;
 
 import java.util.List;
 
@@ -13,14 +13,15 @@ import rx.Observable;
 
 public class ComicStore implements ComicsRepository {
 
-    private final ComicService comicService;
+    // This could be split into separate interfaces per feature for larger applications
+    private final MarvelService marvelService;
 
-    public ComicStore(ComicService comicService) {
-        this.comicService = comicService;
+    public ComicStore(MarvelService marvelService) {
+        this.marvelService = marvelService;
     }
 
     @Override
     public Observable<List<Comic>> fetchComics() {
-        return comicService.getComics();
+        return marvelService.getComics(100);
     }
 }

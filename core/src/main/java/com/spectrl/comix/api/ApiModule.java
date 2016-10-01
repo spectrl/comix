@@ -18,7 +18,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 
 @Module
 public class ApiModule {
-    public static final String MARVEL_API_URL = "http://gateway.marvel.com/";
+    private static final String MARVEL_API_URL = "http://gateway.marvel.com/";
 
     @Provides @Singleton
     HttpUrl provideBaseUrl() {
