@@ -1,8 +1,10 @@
-package com.spectrl.comix.collection.data.store;
+package com.spectrl.comix.collection.data.repository;
 
 import com.spectrl.comix.collection.data.model.Comic;
 
 import java.util.List;
+
+import rx.Observable;
 
 /**
  * Created by Kavi @ SPECTRL Ltd. on 22/09/2016.
@@ -10,6 +12,5 @@ import java.util.List;
 
 public interface ComicsRepository {
 
-    // TODO: 22/09/2016 Rx-ify (make async)
-    List<Comic> fetchComics();
+    Observable<List<Comic>> fetchComics();
 }

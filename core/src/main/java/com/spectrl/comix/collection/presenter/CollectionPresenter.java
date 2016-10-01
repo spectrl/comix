@@ -1,7 +1,7 @@
 package com.spectrl.comix.collection.presenter;
 
 import com.spectrl.comix.collection.data.model.Comic;
-import com.spectrl.comix.collection.data.store.ComicsRepository;
+import com.spectrl.comix.collection.data.repository.ComicsRepository;
 import com.spectrl.comix.presenter.BasePresenter;
 
 import static com.spectrl.comix.collection.view.CollectionContract.CollectionInteractionListener;
