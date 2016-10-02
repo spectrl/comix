@@ -48,4 +48,9 @@ public class ApiModule {
                 .client(okHttpClient)
                 .build();
     }
+
+    @Provides @Singleton
+    MarvelService provideMarvelService(Retrofit retrofit) {
+        return retrofit.create(MarvelService.class);
+    }
 }
