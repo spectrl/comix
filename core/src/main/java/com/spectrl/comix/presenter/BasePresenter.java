@@ -8,10 +8,6 @@ import com.spectrl.comix.view.View;
 public abstract class BasePresenter<V extends View> implements Presenter<V> {
     private V view;
 
-    public BasePresenter(V view) {
-        takeView(view);
-    }
-
     public final void takeView(V view) {
         if (view == null) throw new NullPointerException("new view must not be null");
 

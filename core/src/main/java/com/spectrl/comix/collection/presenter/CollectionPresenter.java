@@ -32,8 +32,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
 
     private final ComicsRepository comicsRepository;
 
-    public CollectionPresenter(CollectionView view, ComicsRepository comicsRepository) {
-        super(view);
+    public CollectionPresenter(ComicsRepository comicsRepository) {
         this.comicsRepository = comicsRepository;
     }
 
