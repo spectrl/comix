@@ -27,6 +27,13 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         archivesBaseName = "comix-${versions.code}"
+
+        def secretProperties = file("../secret.properties")
+        Properties props = new Properties()
+        props.load(new FileInputStream(secretProperties))
+
+        buildConfigField "String", "MARVEL_PUBLIC_KEY", "\"${props.marvel_public_key}\""
+        buildConfigField "String", "MARVEL_PRIVATE_KEY", "\"${props.marvel_private_key}\""
     }
 
     buildTypes {

@@ -2,6 +2,8 @@ package com.spectrl.comix.di.application;
 
 import android.app.Application;
 
+import com.spectrl.comix.BuildConfig;
+import com.spectrl.comix.api.MarvelAuthorizationInterceptor;
 import com.spectrl.comix.di.MainThread;
 
 import javax.inject.Singleton;
@@ -36,5 +38,10 @@ public class ApplicationModule {
     @Singleton @MainThread
     Scheduler provideMainThreadScheduler() {
         return AndroidSchedulers.mainThread();
+    }
+
+    @Provides @Singleton
+    MarvelAuthorizationInterceptor provideMarvelAuthorizationInterceptor() {
+        return new MarvelAuthorizationInterceptor(BuildConfig.MARVEL_PUBLIC_KEY, BuildConfig.MARVEL_PRIVATE_KEY);
     }
 }

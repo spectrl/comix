@@ -34,11 +34,11 @@ public class ApiModule {
     }
 
     @Provides @Singleton
-    OkHttpClient provideOkHttpClient() {
-        // TODO: 02/10/2016 Turn off logging for production
+    OkHttpClient provideOkHttpClient(MarvelAuthorizationInterceptor marvelAuthorizationInterceptor) {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
         return new OkHttpClient.Builder()
+                .addInterceptor(marvelAuthorizationInterceptor)
                 .addInterceptor(logging)
                 .build();
     }
