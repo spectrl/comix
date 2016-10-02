@@ -20,9 +20,11 @@ dependencies {
     compileOnly libs.autoValue
     apt         libs.autoValue
 
-    compile libs.moshi
     compile libs.retrofit
     compile libs.retrofitRxJavaAdapter
+    compile libs.loggingInterceptor
+
+    compile libs.moshi
     compile libs.moshiConverter
 
     apt libs.autoValueMoshi

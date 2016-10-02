@@ -8,6 +8,7 @@ import dagger.Module;
 import dagger.Provides;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
@@ -34,9 +35,12 @@ public class ApiModule {
 
     @Provides @Singleton
     OkHttpClient provideOkHttpClient() {
-        OkHttpClient client = new OkHttpClient();
-        // TODO: 28/09/2016 Configure OkHttpClient - timeout, cache etc.
-        return client;
+        // TODO: 02/10/2016 Turn off logging for production
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        return new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build();
     }
 
     @Provides @Singleton
