@@ -32,18 +32,20 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
 
     private final ComicsRepository comicsRepository;
 
+    @Inject
     public CollectionPresenter(ComicsRepository comicsRepository) {
         this.comicsRepository = comicsRepository;
     }
 
     @Override
     public void enter() {
-
+        getView().attach(this);
+        refreshComics();
     }
 
     @Override
     public void exit() {
-
+        getView().detach(this);
     }
 
     @Override
@@ -61,6 +63,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
+                        if (!hasView()) { return; }
                         getView().setProgressIndicator(false);
                         // TODO: 02/10/2016 Display error
                     }
