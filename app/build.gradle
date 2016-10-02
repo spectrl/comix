@@ -54,6 +54,8 @@ dependencies {
     compile libs.dagger
     apt libs.daggerCompiler
 
+    compile libs.rxAndroid
+
     compile libs.butterknife
     apt libs.butterknifeCompiler
 
