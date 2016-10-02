@@ -2,10 +2,14 @@ package com.spectrl.comix.di.application;
 
 import android.app.Application;
 
+import com.spectrl.comix.di.MainThread;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * A module for Android-specific dependencies which require a {@link Context} or
@@ -26,5 +30,11 @@ public class ApplicationModule {
     @Singleton
     Application application() {
         return application;
+    }
+
+    @Provides
+    @Singleton @MainThread
+    Scheduler provideMainThreadScheduler() {
+        return AndroidSchedulers.mainThread();
     }
 }
