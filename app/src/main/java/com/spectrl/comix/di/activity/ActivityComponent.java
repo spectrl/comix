@@ -1,5 +1,7 @@
 package com.spectrl.comix.di.activity;
 
+import com.spectrl.comix.collection.CollectionActivity;
+
 import dagger.Subcomponent;
 
 /**
@@ -11,5 +13,6 @@ import dagger.Subcomponent;
         modules = ActivityModule.class
 )
 public interface ActivityComponent {
+    void inject(CollectionActivity collectionActivity);
     // Subcomponents
 }
