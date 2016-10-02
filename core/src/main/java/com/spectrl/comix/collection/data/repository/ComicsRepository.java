@@ -12,5 +12,5 @@ import rx.Observable;
 
 public interface ComicsRepository {
 
-    Observable<List<Comic>> fetchComics();
+    Observable<List<Comic>> fetchComics(int limit);
 }

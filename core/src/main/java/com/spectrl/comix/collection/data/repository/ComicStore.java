@@ -21,7 +21,7 @@ public class ComicStore implements ComicsRepository {
     }
 
     @Override
-    public Observable<List<Comic>> fetchComics() {
+    public Observable<List<Comic>> fetchComics(int limit) {
         return marvelService.getComics(100);
     }
 }
