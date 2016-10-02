@@ -3,6 +3,7 @@ package com.spectrl.comix;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
+import com.spectrl.comix.api.ApiModule;
 import com.spectrl.comix.di.application.ApplicationComponent;
 import com.spectrl.comix.di.application.ApplicationModule;
 import com.spectrl.comix.di.application.DaggerApplicationComponent;
@@ -33,6 +34,7 @@ public class ComixApp extends Application {
     private void buildComponents() {
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
+                .apiModule(new ApiModule(BuildConfig.DEBUG))
                 .build();
     }
 }
