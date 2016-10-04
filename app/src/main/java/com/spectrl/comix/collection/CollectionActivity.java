@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.spectrl.comix.BaseActivity;
 import com.spectrl.comix.R;
 import com.spectrl.comix.collection.presenter.CollectionPresenter;
+import com.spectrl.comix.collection.view.CollectionView;
 import com.spectrl.comix.di.activity.ActivityComponent;
 import com.spectrl.comix.di.activity.ActivityModule;
 import com.spectrl.comix.di.application.Injector;

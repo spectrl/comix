@@ -10,6 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Scheduler;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -53,6 +54,13 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
         subscriptions.add(comicsRepository.fetchComics(COMIC_LIMIT)
                 .subscribeOn(Schedulers.io())
                 .observeOn(mainThread)
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        if (!hasView()) { return; }
+                        getView().setProgressIndicator(true);
+                    }
+                })
                 .subscribe(new Action1<List<Comic>>() {
                     @Override
                     public void call(List<Comic> comics) {

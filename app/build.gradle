@@ -58,6 +58,9 @@ dependencies {
     compile libs.appcompat
     compile libs.recyclerview
 
+    compile libs.glide
+    compile libs.glideOkHttp3
+
     compile libs.dagger
     apt libs.daggerCompiler
 

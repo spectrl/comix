@@ -13,15 +13,16 @@ import java.util.List;
 @AutoValue
 public abstract class Comic {
 
-    abstract int id();
-    abstract String title();
-    abstract double issueNumber();
-    abstract int pageCount();
-    abstract List<Price> prices();
-    abstract List<Image> images();
+    public abstract int id();
+    public abstract String title();
+    public abstract double issueNumber();
+    public abstract int pageCount();
+    public abstract Image thumbnail();
+    public abstract List<Price> prices();
+    public abstract List<Image> images();
 
-    public static Comic create(int id, String title, double issueNumber, int pageCount, List<Price> prices, List<Image> images) {
-        return new AutoValue_Comic(id, title, issueNumber, pageCount, prices, images);
+    public static Comic create(int id, String title, double issueNumber, int pageCount, Image thumbnail, List<Price> prices, List<Image> images) {
+        return new AutoValue_Comic(id, title, issueNumber, pageCount, thumbnail, prices, images);
     }
 
     public static JsonAdapter<Comic> jsonAdapter(Moshi moshi) {
@@ -30,8 +31,8 @@ public abstract class Comic {
 
     @AutoValue
     public static abstract class Price {
-        abstract String type();
-        abstract float price();
+        public abstract String type();
+        public abstract float price();
 
         public static Price create(String type, float price) {
             return new AutoValue_Comic_Price(type, price);
@@ -44,8 +45,12 @@ public abstract class Comic {
 
     @AutoValue
     public static abstract class Image {
-        abstract String path();
-        abstract String extension();
+        public abstract String path();
+        public abstract String extension();
+
+        public String imageUrl() {
+            return String.format("%s.%s", path(), extension());
+        }
 
         public static Image create(String path, String extension) {
             return new AutoValue_Comic_Image(path, extension);
