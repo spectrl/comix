@@ -33,7 +33,7 @@ public abstract class Comic {
         abstract String type();
         abstract float price();
 
-        public Price create(String type, float price) {
+        public static Price create(String type, float price) {
             return new AutoValue_Comic_Price(type, price);
         }
 
@@ -47,7 +47,7 @@ public abstract class Comic {
         abstract String path();
         abstract String extension();
 
-        public Image create(String path, String extension) {
+        public static Image create(String path, String extension) {
             return new AutoValue_Comic_Image(path, extension);
         }
 

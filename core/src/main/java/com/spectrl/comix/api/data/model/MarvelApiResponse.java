@@ -31,7 +31,7 @@ public abstract class MarvelApiResponse {
         public abstract int count();
         public abstract List<Comic> results();
 
-        public Data create(int count, List<Comic> results) {
+        public static Data create(int count, List<Comic> results) {
             return new AutoValue_MarvelApiResponse_Data(count, results);
         }
 
