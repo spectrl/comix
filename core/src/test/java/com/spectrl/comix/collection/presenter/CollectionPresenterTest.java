@@ -3,13 +3,17 @@ package com.spectrl.comix.collection.presenter;
 import com.spectrl.comix.collection.data.model.Comic;
 import com.spectrl.comix.collection.data.repository.ComicsRepository;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
+import rx.Observable;
 
 import static com.spectrl.comix.collection.view.CollectionContract.CollectionView;
 import static org.mockito.Mockito.verify;
@@ -19,7 +23,14 @@ import static org.mockito.Mockito.when;
  * Created by Kavi @ SPECTRL Ltd. on 22/09/2016.
  */
 public class CollectionPresenterTest {
-    private static List<Comic> COMICS = new ArrayList<>(); // TODO: 24/09/2016 Fill in once model class created
+    private static final int COMIC_LIMIT = 3;
+    private static final List<Comic> COMICS = Arrays.asList(
+            Comic.create(0, "TITLE1", 1, 100,
+                    Collections.singletonList(Comic.Price.create("digital", 5.00f)), Collections.singletonList(Comic.Image.create("PATH", "png"))),
+            Comic.create(1, "TITLE2", 3, 100,
+                    Collections.singletonList(Comic.Price.create("digital", 5.00f)), Collections.singletonList(Comic.Image.create("PATH", "png"))),
+            Comic.create(2, "TITLE3", 5, 100,
+                    Collections.singletonList(Comic.Price.create("digital", 5.00f)), Collections.singletonList(Comic.Image.create("PATH", "png"))));
 
     @Mock
     private CollectionView collectionView;
@@ -36,10 +47,16 @@ public class CollectionPresenterTest {
         MockitoAnnotations.initMocks(this);
 
         // Get a reference to the class under test
-        collectionPresenter = new CollectionPresenter(collectionView, comicsRepository);
+        collectionPresenter = new CollectionPresenter(comicsRepository);
+        collectionPresenter.takeView(collectionView);
 
         // Stub method to return dummy data
-        when(comicsRepository.fetchComics()).thenReturn(COMICS);
+        when(comicsRepository.fetchComics(COMIC_LIMIT)).thenReturn(Observable.just(COMICS));
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        collectionPresenter.dropView(collectionView);
     }
 
     @Test
@@ -47,7 +64,7 @@ public class CollectionPresenterTest {
         collectionPresenter.refreshComics();
 
         verify(collectionView).setProgressIndicator(true);
-        verify(comicsRepository).fetchComics();
+        verify(comicsRepository).fetchComics(COMIC_LIMIT);
         verify(collectionView).setProgressIndicator(false);
         verify(collectionView).displayComics(COMICS);
     }
