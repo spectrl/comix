@@ -77,8 +77,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     }
 
     @Override
-    public void onSetBudget(float budget) {
-        
+    public void onSetBudget(double budget) {
     }
 
     @Override

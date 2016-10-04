@@ -28,7 +28,7 @@ public interface CollectionContract {
 
         void onComicChosen(Comic comic);
 
-        void onSetBudget(float budget);
+        void onSetBudget(double budget);
 
         void onPageCount();
     }
