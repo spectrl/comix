@@ -6,11 +6,13 @@ buildscript {
         def plugin = rootProject.ext.gradlePlugins
 
         classpath plugin.apt
+        classpath plugin.retrolambda
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'net.ltgt.apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -40,5 +42,5 @@ dependencies {
     testCompile libs.truth
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"

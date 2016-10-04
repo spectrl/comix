@@ -23,6 +23,7 @@ ext {
             // Gradle plugins
             androidApt:     '1.8',
             apt:            '0.9',
+            retrolambda:    '3.3.0',
 
             // Libs
             support:            '24.2.1',
@@ -45,7 +46,8 @@ ext {
 
     gradlePlugins = [
             androidApt:          "com.neenbedankt.gradle.plugins:android-apt:${versions.androidApt}",
-            apt:                 "net.ltgt.gradle:gradle-apt-plugin:${versions.apt}"
+            apt:                 "net.ltgt.gradle:gradle-apt-plugin:${versions.apt}",
+            retrolambda:         "me.tatarka:gradle-retrolambda:${versions.retrolambda}"
     ]
 
     libs = [
