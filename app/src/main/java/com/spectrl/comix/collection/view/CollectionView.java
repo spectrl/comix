@@ -75,7 +75,6 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
             @Override
             public void onRefresh() {
                 interactionListener.refreshComics();
-                // TODO: 24/09/2016 setProgressIndicator to false on refresh complete
             }
         });
         collectionAdapter.setInteractionListener(interactionListener);
