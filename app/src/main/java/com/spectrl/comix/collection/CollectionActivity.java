@@ -1,6 +1,7 @@
 package com.spectrl.comix.collection;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 import com.spectrl.comix.BaseActivity;
 import com.spectrl.comix.R;
@@ -18,29 +19,31 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
 
     @Inject CollectionPresenter collectionPresenter;
 
+    @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.collection_view) CollectionView collectionView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        collectionPresenter.takeView(collectionView);
+        setSupportActionBar(toolbar);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        collectionPresenter.takeView(collectionView);
         collectionPresenter.enter();
     }
 
     @Override
     protected void onPause() {
         collectionPresenter.exit();
+        collectionPresenter.dropView(collectionView);
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        collectionPresenter.dropView(collectionView);
         super.onDestroy();
     }
 
