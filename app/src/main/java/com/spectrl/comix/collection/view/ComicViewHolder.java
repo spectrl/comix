@@ -1,15 +1,14 @@
 package com.spectrl.comix.collection.view;
 
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.spectrl.comix.R;
 import com.spectrl.comix.collection.data.model.Comic;
 
-import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -23,19 +22,17 @@ public class ComicViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.title) TextView title;
     @BindView(R.id.issueNumber) TextView issueNumber;
 
-    // FIXME: 04/10/2016 Temp
-    @BindColor(R.color.colorAccent) int colorAccent;
-
     public ComicViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
     public void bindTo(final Comic comic, final ComicSelectionListener listener) {
-        // FIXME: 04/10/2016 Load thumbnail using Glide
-        ColorDrawable colorDrawable = new ColorDrawable(colorAccent);
-        thumbnail.setDrawingCacheEnabled(true);
-        thumbnail.setImageDrawable(colorDrawable);
+        // TODO: 04/10/2016 Add placeholder and error 
+        Glide.with(itemView.getContext())
+                .load(comic.thumbnail().imageUrl())
+                .crossFade()
+                .into(thumbnail);
         title.setText(comic.title());
         issueNumber.setText(String.valueOf(comic.issueNumber()));
 

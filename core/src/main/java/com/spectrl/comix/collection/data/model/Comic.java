@@ -17,11 +17,12 @@ public abstract class Comic {
     public abstract String title();
     public abstract double issueNumber();
     public abstract int pageCount();
+    public abstract Image thumbnail();
     public abstract List<Price> prices();
     public abstract List<Image> images();
 
-    public static Comic create(int id, String title, double issueNumber, int pageCount, List<Price> prices, List<Image> images) {
-        return new AutoValue_Comic(id, title, issueNumber, pageCount, prices, images);
+    public static Comic create(int id, String title, double issueNumber, int pageCount, Image thumbnail, List<Price> prices, List<Image> images) {
+        return new AutoValue_Comic(id, title, issueNumber, pageCount, thumbnail, prices, images);
     }
 
     public static JsonAdapter<Comic> jsonAdapter(Moshi moshi) {
@@ -46,6 +47,10 @@ public abstract class Comic {
     public static abstract class Image {
         public abstract String path();
         public abstract String extension();
+
+        public String imageUrl() {
+            return String.format("%s.%s", path(), extension());
+        }
 
         public static Image create(String path, String extension) {
             return new AutoValue_Comic_Image(path, extension);
