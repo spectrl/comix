@@ -45,8 +45,9 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
         budget.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(null, 2)});
         budgetSubscription = RxTextView.textChangeEvents(budget)
                 .debounce(400, TimeUnit.MILLISECONDS)
-                .filter(changes -> !TextUtils.isEmpty(changes.text()))
-                .map(changes -> Double.parseDouble(changes.text().toString()))
+                .map(changes -> TextUtils.isEmpty(changes.text())
+                        ? -1.00
+                        : Double.parseDouble(changes.text().toString()))
                 .subscribe(budget -> {
                     collectionPresenter.onSetBudget(budget);
                 });
