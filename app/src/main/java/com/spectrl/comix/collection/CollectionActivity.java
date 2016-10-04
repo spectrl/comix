@@ -2,6 +2,7 @@ package com.spectrl.comix.collection;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,8 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
+
+        budget.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(null, 2)});
     }
 
     @Override
