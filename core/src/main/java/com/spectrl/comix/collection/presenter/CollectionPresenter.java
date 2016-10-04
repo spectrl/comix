@@ -6,6 +6,9 @@ import com.spectrl.comix.di.MainThread;
 import com.spectrl.comix.presenter.BasePresenter;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
@@ -21,6 +24,7 @@ import static com.spectrl.comix.collection.view.CollectionContract.CollectionVie
  */
 
 public class CollectionPresenter extends BasePresenter<CollectionView> implements CollectionInteractionListener {
+    private final static Logger LOGGER = Logger.getLogger(CollectionPresenter.class.getName());
 
     private static final int COMIC_LIMIT = 100;
     
@@ -78,6 +82,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
 
     @Override
     public void onSetBudget(double budget) {
+        LOGGER.log(Level.INFO, String.format(Locale.ENGLISH, "Budget is %f", budget));
     }
 
     @Override
