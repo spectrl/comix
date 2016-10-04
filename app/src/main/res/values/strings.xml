@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Comix</string>
     <string name="budget">Budget</string>
+    <string name="page_count">Page count</string>
 </resources>

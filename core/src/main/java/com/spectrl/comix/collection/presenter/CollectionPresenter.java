@@ -72,6 +72,11 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
 
     @Override
     public void onSetBudget(float budget) {
+        
+    }
+
+    @Override
+    public void onPageCount() {
 
     }
 }

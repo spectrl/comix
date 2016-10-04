@@ -88,6 +88,10 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
             }
             return true;
         }
+        if (item.getItemId() == R.id.action_page_count) {
+            collectionPresenter.onPageCount();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

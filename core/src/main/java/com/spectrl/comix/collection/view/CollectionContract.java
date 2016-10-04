@@ -17,6 +17,8 @@ public interface CollectionContract {
 
         void setProgressIndicator(boolean active);
 
+        void showPageCount();
+
         // TODO: 22/09/2016 Error state
     }
 
@@ -27,5 +29,7 @@ public interface CollectionContract {
         void onComicChosen(Comic comic);
 
         void onSetBudget(float budget);
+
+        void onPageCount();
     }
 }
