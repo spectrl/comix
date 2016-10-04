@@ -10,7 +10,7 @@ import com.spectrl.comix.collection.data.model.Comic;
 import java.util.Collections;
 import java.util.List;
 
-import static com.spectrl.comix.collection.view.CollectionContract.*;
+import static com.spectrl.comix.collection.view.CollectionContract.CollectionInteractionListener;
 
 /**
  * Created by Kavi @ SPECTRL Ltd. on 04/10/2016.
