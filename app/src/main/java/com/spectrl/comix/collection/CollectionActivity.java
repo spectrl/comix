@@ -1,11 +1,13 @@
 package com.spectrl.comix.collection;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.spectrl.comix.BaseActivity;
@@ -69,9 +71,20 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
             if (isVisible) {
                 item.setIcon(R.drawable.ic_local_atm_white_24dp);
                 budget.setVisibility(View.GONE);
+                budget.setText("");
+                View view = getCurrentFocus();
+                if (view != null) {
+                    InputMethodManager imm =
+                            (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
             } else {
                 item.setIcon(R.drawable.ic_close_white_24dp);
                 budget.setVisibility(View.VISIBLE);
+                budget.requestFocus();
+                InputMethodManager imm =
+                        (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(budget, InputMethodManager.SHOW_IMPLICIT);
             }
             return true;
         }
