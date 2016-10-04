@@ -5,13 +5,9 @@ import com.spectrl.comix.collection.data.repository.ComicsRepository;
 import com.spectrl.comix.di.MainThread;
 import com.spectrl.comix.presenter.BasePresenter;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import rx.Scheduler;
-import rx.functions.Action0;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -54,27 +50,18 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
         subscriptions.add(comicsRepository.fetchComics(COMIC_LIMIT)
                 .subscribeOn(Schedulers.io())
                 .observeOn(mainThread)
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        if (!hasView()) { return; }
-                        getView().setProgressIndicator(true);
-                    }
+                .doOnSubscribe(() -> {
+                    if (!hasView()) { return; }
+                    getView().setProgressIndicator(true);
                 })
-                .subscribe(new Action1<List<Comic>>() {
-                    @Override
-                    public void call(List<Comic> comics) {
-                        if (!hasView()) { return; }
-                        getView().setProgressIndicator(false);
-                        getView().displayComics(comics);
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        if (!hasView()) { return; }
-                        getView().setProgressIndicator(false);
-                        // TODO: 02/10/2016 Display error
-                    }
+                .subscribe(comics -> {
+                    if (!hasView()) { return; }
+                    getView().setProgressIndicator(false);
+                    getView().displayComics(comics);
+                }, throwable -> {
+                    if (!hasView()) { return; }
+                    getView().setProgressIndicator(false);
+                    // TODO: 02/10/2016 Display error
                 }));
     }
 

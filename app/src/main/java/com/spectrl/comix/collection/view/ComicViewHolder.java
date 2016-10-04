@@ -36,12 +36,7 @@ public class ComicViewHolder extends RecyclerView.ViewHolder {
         title.setText(comic.title());
         issueNumber.setText(String.valueOf(comic.issueNumber()));
 
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onComicSelected(comic);
-            }
-        });
+        itemView.setOnClickListener(view -> listener.onComicSelected(comic));
     }
 
     public interface ComicSelectionListener {
