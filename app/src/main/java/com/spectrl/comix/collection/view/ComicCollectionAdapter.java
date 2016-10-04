@@ -48,14 +48,6 @@ public class ComicCollectionAdapter extends RecyclerView.Adapter<ComicViewHolder
         return comics.get(position).id();
     }
 
-    int getPageCount() {
-        int pages = 0;
-        for (Comic comic : comics) {
-            pages += comic.pageCount();
-        }
-        return pages;
-    }
-
     public void setInteractionListener(CollectionInteractionListener interactionListener) {
         this.interactionListener = interactionListener;
     }

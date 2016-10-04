@@ -70,10 +70,10 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     }
 
     @Override
-    public void showPageCount() {
+    public void showPageCount(int count) {
         Snackbar.make(swipeLayout,
                 String.format(getContext().getString(R.string.page_count_message),
-                        collectionAdapter.getPageCount()),
+                        count),
                 Snackbar.LENGTH_LONG).show();
     }
 

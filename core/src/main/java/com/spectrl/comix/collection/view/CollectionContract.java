@@ -17,7 +17,7 @@ public interface CollectionContract {
 
         void setProgressIndicator(boolean active);
 
-        void showPageCount();
+        void showPageCount(int count);
 
         // TODO: 22/09/2016 Error state
     }

@@ -5,6 +5,8 @@ import com.spectrl.comix.collection.data.repository.ComicsRepository;
 import com.spectrl.comix.di.MainThread;
 import com.spectrl.comix.presenter.BasePresenter;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import rx.Scheduler;
@@ -28,6 +30,8 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     Scheduler mainThread;
 
     private final ComicsRepository comicsRepository;
+
+    private int totalPageCount;
 
     @Inject
     public CollectionPresenter(ComicsRepository comicsRepository) {
@@ -54,6 +58,8 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
                     if (!hasView()) { return; }
                     getView().setProgressIndicator(true);
                 })
+                .doOnNext(comics -> totalPageCount = countPages(comics))
+                .doOnError(throwable -> totalPageCount = 0)
                 .subscribe(comics -> {
                     if (!hasView()) { return; }
                     getView().setProgressIndicator(false);
@@ -78,6 +84,14 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     @Override
     public void onPageCount() {
         if (!hasView()) { return; }
-        getView().showPageCount();
+        getView().showPageCount(totalPageCount);
+    }
+
+    private int countPages(List<Comic> comics) {
+        int pages = 0;
+        for (Comic comic : comics) {
+            pages += comic.pageCount();
+        }
+        return pages;
     }
 }
