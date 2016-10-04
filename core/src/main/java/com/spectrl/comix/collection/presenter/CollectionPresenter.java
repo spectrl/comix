@@ -77,6 +77,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
 
     @Override
     public void onPageCount() {
-
+        if (!hasView()) { return; }
+        getView().showPageCount();
     }
 }

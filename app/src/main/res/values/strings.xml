@@ -2,4 +2,5 @@
     <string name="app_name">Comix</string>
     <string name="budget">Budget</string>
     <string name="page_count">Page count</string>
+    <string name="page_count_message">%d pages to read</string>
 </resources>

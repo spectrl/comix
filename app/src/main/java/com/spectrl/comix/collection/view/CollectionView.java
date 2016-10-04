@@ -1,6 +1,7 @@
 package com.spectrl.comix.collection.view;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -66,6 +67,14 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     @Override
     public void setProgressIndicator(boolean active) {
         swipeLayout.setRefreshing(active);
+    }
+
+    @Override
+    public void showPageCount() {
+        Snackbar.make(swipeLayout,
+                String.format(getContext().getString(R.string.page_count_message),
+                        collectionAdapter.getPageCount()),
+                Snackbar.LENGTH_LONG).show();
     }
 
     @Override

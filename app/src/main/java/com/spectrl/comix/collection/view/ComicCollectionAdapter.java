@@ -10,7 +10,7 @@ import com.spectrl.comix.collection.data.model.Comic;
 import java.util.Collections;
 import java.util.List;
 
-import static com.spectrl.comix.collection.view.CollectionContract.*;
+import static com.spectrl.comix.collection.view.CollectionContract.CollectionInteractionListener;
 
 /**
  * Created by Kavi @ SPECTRL Ltd. on 04/10/2016.
@@ -46,6 +46,14 @@ public class ComicCollectionAdapter extends RecyclerView.Adapter<ComicViewHolder
     @Override
     public long getItemId(int position) {
         return comics.get(position).id();
+    }
+
+    int getPageCount() {
+        int pages = 0;
+        for (Comic comic : comics) {
+            pages += comic.pageCount();
+        }
+        return pages;
     }
 
     public void setInteractionListener(CollectionInteractionListener interactionListener) {
