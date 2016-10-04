@@ -25,5 +25,7 @@ public interface CollectionContract {
         void refreshComics();
 
         void onComicChosen(Comic comic);
+
+        void onSetBudget(float budget);
     }
 }

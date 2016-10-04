@@ -2,6 +2,10 @@ package com.spectrl.comix.collection;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 import com.spectrl.comix.BaseActivity;
 import com.spectrl.comix.R;
@@ -20,6 +24,7 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
     @Inject CollectionPresenter collectionPresenter;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.budget) EditText budget;
     @BindView(R.id.collection_view) CollectionView collectionView;
 
     @Override
@@ -45,6 +50,29 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_collection, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_budget) {
+            final boolean isVisible = budget.getVisibility() == View.VISIBLE;
+            if (isVisible) {
+                item.setIcon(R.drawable.ic_local_atm_white_24dp);
+                budget.setVisibility(View.GONE);
+            } else {
+                item.setIcon(R.drawable.ic_close_white_24dp);
+                budget.setVisibility(View.VISIBLE);
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

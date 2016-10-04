@@ -69,4 +69,9 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     public void onComicChosen(Comic comic) {
         // TODO: 22/09/2016 Open Comic details Activity using Navigator
     }
+
+    @Override
+    public void onSetBudget(float budget) {
+
+    }
 }
