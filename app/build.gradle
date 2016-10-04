@@ -64,6 +64,7 @@ dependencies {
 
     compile libs.appcompat
     compile libs.recyclerview
+    compile libs.design
 
     compile libs.glide
     compile libs.glideOkHttp3
