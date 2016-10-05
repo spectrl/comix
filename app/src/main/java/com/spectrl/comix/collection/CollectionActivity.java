@@ -4,12 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.jakewharton.rxbinding.widget.RxTextView;
 import com.spectrl.comix.BaseActivity;
 import com.spectrl.comix.R;
 import com.spectrl.comix.collection.presenter.CollectionPresenter;
@@ -18,9 +20,13 @@ import com.spectrl.comix.di.activity.ActivityComponent;
 import com.spectrl.comix.di.activity.ActivityModule;
 import com.spectrl.comix.di.application.Injector;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class CollectionActivity extends BaseActivity<ActivityComponent> {
 
@@ -29,6 +35,8 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.budget) EditText budget;
     @BindView(R.id.collection_view) CollectionView collectionView;
+
+    private Subscription budgetSubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +50,17 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
     protected void onResume() {
         super.onResume();
         collectionPresenter.takeView(collectionView);
+
+        budgetSubscription = RxTextView.textChangeEvents(budget)
+                .debounce(400, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(changes -> TextUtils.isEmpty(changes.text())
+                        ? -1.00
+                        : Double.parseDouble(changes.text().toString()))
+                .subscribe(budget -> {
+                    collectionPresenter.onSetBudget(budget);
+                });
+
         collectionPresenter.enter();
     }
 
@@ -54,6 +73,7 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
 
     @Override
     protected void onDestroy() {
+        budgetSubscription.unsubscribe();
         super.onDestroy();
     }
 

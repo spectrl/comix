@@ -80,7 +80,7 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     @Override
     public void attach(final CollectionInteractionListener interactionListener) {
         this.interactionListener = interactionListener;
-        swipeLayout.setOnRefreshListener(interactionListener::refreshComics);
+        swipeLayout.setOnRefreshListener(() -> interactionListener.refreshComics(true));
         collectionAdapter.setInteractionListener(interactionListener);
     }
 

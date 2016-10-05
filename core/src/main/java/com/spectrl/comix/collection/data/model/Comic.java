@@ -4,6 +4,9 @@ import com.google.auto.value.AutoValue;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -29,6 +32,21 @@ public abstract class Comic {
         return new AutoValue_Comic.MoshiJsonAdapter(moshi);
     }
 
+    public static Comparator<? super Comic> byPrice() {
+        return new Comparator<Comic>() {
+            @Override
+            public int compare(Comic o1, Comic o2) {
+                return Float.compare(o1.lowestPrice(), o2.lowestPrice());
+            }
+        };
+    }
+
+    public float lowestPrice() {
+        List<Price> sortedList = new ArrayList<>(prices());
+        Collections.sort(sortedList, Price.byPrice());
+        return sortedList.get(0).price();
+    }
+
     @AutoValue
     public static abstract class Price {
         public abstract String type();
@@ -40,6 +58,15 @@ public abstract class Comic {
 
         public static JsonAdapter<Price> jsonAdapter(Moshi moshi) {
             return new AutoValue_Comic_Price.MoshiJsonAdapter(moshi);
+        }
+
+        private static Comparator<? super Price> byPrice() {
+            return new Comparator<Price>() {
+                @Override
+                public int compare(Price o1, Price o2) {
+                    return Float.compare(o1.price(), (o2.price()));
+                }
+            };
         }
     }
 
