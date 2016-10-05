@@ -20,7 +20,6 @@ public class ComicViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.thumbnail) ImageView thumbnail;
     @BindView(R.id.title) TextView title;
-    @BindView(R.id.issueNumber) TextView issueNumber;
 
     public ComicViewHolder(View itemView) {
         super(itemView);
@@ -34,7 +33,6 @@ public class ComicViewHolder extends RecyclerView.ViewHolder {
                 .crossFade()
                 .into(thumbnail);
         title.setText(comic.title());
-        issueNumber.setText(String.valueOf(comic.issueNumber()));
 
         itemView.setOnClickListener(view -> listener.onComicSelected(comic));
     }
