@@ -31,6 +31,7 @@ public class ComicViewHolder extends RecyclerView.ViewHolder {
         Glide.with(itemView.getContext())
                 .load(comic.thumbnail().imageUrl())
                 .crossFade()
+                .centerCrop()
                 .into(thumbnail);
         title.setText(comic.title());
 
