@@ -51,6 +51,7 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
 
         comicsRecyclerView.setAdapter(collectionAdapter);
         comicsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), columns));
+        comicsRecyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.grid_spacing));
     }
 
     @Override
