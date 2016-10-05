@@ -5,6 +5,10 @@ import android.app.Application;
 import com.spectrl.comix.BuildConfig;
 import com.spectrl.comix.api.MarvelAuthorizationInterceptor;
 import com.spectrl.comix.di.MainThread;
+import com.spectrl.comix.util.Connection;
+import com.spectrl.comix.util.Connectivity;
+
+import java.io.File;
 
 import javax.inject.Singleton;
 
@@ -43,5 +47,15 @@ public class ApplicationModule {
     @Provides @Singleton
     MarvelAuthorizationInterceptor provideMarvelAuthorizationInterceptor() {
         return new MarvelAuthorizationInterceptor(BuildConfig.MARVEL_PUBLIC_KEY, BuildConfig.MARVEL_PRIVATE_KEY);
+    }
+
+    @Provides @Singleton
+    File provideCacheDirectory() {
+        return application.getCacheDir();
+    }
+
+    @Provides @Singleton
+    Connection provideConnection() {
+        return new Connectivity(application);
     }
 }
