@@ -38,6 +38,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
 
     private int totalPageCount;
     private BigDecimal budget = BigDecimal.valueOf(-1);
+    private boolean isShowingBudgetInfo;
 
     @Inject
     public CollectionPresenter(ComicsRepository comicsRepository) {
@@ -91,6 +92,11 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
 
         // If we have no budget, load everything
         if (!haveBudget()) {
+            if (hasView() && isShowingBudgetInfo) {
+                getView().showBudgetInfo(false);
+                isShowingBudgetInfo = false;
+            }
+
             refreshComics(false);
             return;
         }
@@ -104,6 +110,13 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
                 .subscribe(comics -> {
                     if (!hasView()) { return; }
                     getView().displayComics(comics);
+
+                    if (!isShowingBudgetInfo) {
+                        getView().showBudgetInfo(true);
+                        isShowingBudgetInfo = true;
+                    }
+                    getView().setBudgetComicCount(comics.size());
+                    getView().setBudgetComicPrice(totalPrice(comics));
                 }));
     }
 
@@ -119,6 +132,14 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
             pages += comic.pageCount();
         }
         return pages;
+    }
+
+    private String totalPrice(List<Comic> comics) {
+        BigDecimal total = BigDecimal.ZERO;
+        for (Comic comic : comics) {
+            total = total.add(BigDecimal.valueOf(comic.lowestPrice()));
+        }
+        return total.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
     }
 
     private boolean haveBudget() {

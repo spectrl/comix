@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content" android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/thumbnail"
-        android:layout_width="150dp"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        tools:ignore="ContentDescription"
-        tools:background="@color/colorAccent"/>
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom|start"
-        tools:text="Title" />
-
-    <TextView
-        android:id="@+id/issueNumber"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom|end"
-        tools:text="#5" />
-
-</FrameLayout>
+<com.spectrl.comix.collection.view.ComicView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/comic_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground"/>

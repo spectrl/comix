@@ -20,6 +20,12 @@ public interface CollectionContract {
 
         void showPageCount(int count);
 
+        void showBudgetInfo(boolean active);
+
+        void setBudgetComicCount(int count);
+
+        void setBudgetComicPrice(String price);
+
         // TODO: 22/09/2016 Error state
     }
 

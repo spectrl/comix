@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import butterknife.BindDimen;
 import butterknife.BindView;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -36,6 +37,8 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.budget) EditText budget;
     @BindView(R.id.collection_view) CollectionView collectionView;
+
+    @BindDimen(R.dimen.grid_spacing) int collectionViewPadding;
 
     private Subscription budgetSubscription;
 
