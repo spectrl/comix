@@ -39,6 +39,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     private final ComicsRepository comicsRepository;
 
     private int totalPageCount;
+    private double budget = -1;
 
     @Inject
     public CollectionPresenter(ComicsRepository comicsRepository) {
@@ -48,7 +49,9 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     @Override
     public void enter() {
         getView().attach(this);
-        refreshComics(true);
+        if (budget == -1) {
+            refreshComics(true);
+        }
     }
 
     @Override
@@ -86,6 +89,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     @Override
     public void onSetBudget(double budget) {
         LOGGER.log(Level.INFO, String.format(Locale.ENGLISH, "Budget is %f", budget));
+        this.budget = budget;
 
         // If we have no budget, load everything
         if (budget == -1) {

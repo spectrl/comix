@@ -44,6 +44,13 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
         setSupportActionBar(toolbar);
 
         budget.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(null, 2)});
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        collectionPresenter.takeView(collectionView);
+
         budgetSubscription = RxTextView.textChangeEvents(budget)
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -53,12 +60,7 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
                 .subscribe(budget -> {
                     collectionPresenter.onSetBudget(budget);
                 });
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        collectionPresenter.takeView(collectionView);
         collectionPresenter.enter();
     }
 
