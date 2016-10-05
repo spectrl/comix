@@ -42,6 +42,7 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     @BindDimen(R.dimen.grid_spacing) int gridPadding;
 
     private Unbinder unbinder;
+    private boolean isShowingBudgetInfo;
 
     private CollectionInteractionListener interactionListener;
 
@@ -90,6 +91,12 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     @Override
     public void showBudgetInfo(boolean active) {
         animateView(active);
+        isShowingBudgetInfo = active;
+    }
+
+    @Override
+    public boolean isShowingBudgetInfo() {
+        return isShowingBudgetInfo;
     }
 
     @Override

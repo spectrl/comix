@@ -2,6 +2,7 @@ package com.spectrl.comix.collection.presenter;
 
 import com.spectrl.comix.collection.data.model.Comic;
 import com.spectrl.comix.collection.data.repository.ComicsRepository;
+import com.spectrl.comix.collection.view.model.Budget;
 import com.spectrl.comix.di.MainThread;
 import com.spectrl.comix.presenter.BasePresenter;
 
@@ -37,8 +38,6 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     private final ComicsRepository comicsRepository;
 
     private int totalPageCount;
-    private BigDecimal budget = BigDecimal.valueOf(-1);
-    private boolean isShowingBudgetInfo;
 
     @Inject
     public CollectionPresenter(ComicsRepository comicsRepository) {
@@ -48,9 +47,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     @Override
     public void enter() {
         getView().attach(this);
-        if (!haveBudget()) {
-            refreshComics(true);
-        }
+        refreshComics(true);
     }
 
     @Override
@@ -86,32 +83,32 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     }
 
     @Override
-    public void onBudget(boolean active) {
-        if (!hasView()) { return; }
-        getView().setRefreshEnabled(!active);
+    public void onBudget(Budget budget) {
+        switch (budget.action()) {
+            case OPEN:
+                if (!hasView()) { return; }
+                getView().setRefreshEnabled(false);
+                break;
+            case CLOSE:
+                if (!hasView()) { return; }
+                getView().setRefreshEnabled(true);
+                break;
+            case UPDATE:
+                findComics(budget.amount());
+                break;
+            case CLEAR:
+                refreshComics(false);
+                if (!hasView()) { return; }
+                if (getView().isShowingBudgetInfo()) {
+                    getView().showBudgetInfo(false);
+                }
+                break;
+        }
     }
 
-    @Override
-    public void onSetBudget(BigDecimal budget) {
+    private void findComics(BigDecimal budget) {
         LOGGER.log(Level.INFO, String.format(Locale.ENGLISH, "Budget is %f", budget));
-        this.budget = budget;
 
-        // TODO: 05/10/2016 Refactor this into explicit isBudgetMode 
-        // If we have no budget, load everything
-        if (!haveBudget()) {
-            if (isShowingBudgetInfo && hasView()) {
-                getView().showBudgetInfo(false);
-                isShowingBudgetInfo = false;
-            }
-
-            refreshComics(false);
-            return;
-        } else {
-            if (!hasView()) { return; }
-            getView().setRefreshEnabled(false);
-        }
-
-        // Otherwise display comics in budget
         subscriptions.add(comicsRepository.comicsInBudget(budget)
                 .subscribeOn(Schedulers.io())
                 .observeOn(mainThread)
@@ -120,10 +117,8 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
                 .subscribe(comics -> {
                     if (!hasView()) { return; }
                     getView().displayComics(comics);
-
-                    if (!isShowingBudgetInfo) {
+                    if (!getView().isShowingBudgetInfo()) {
                         getView().showBudgetInfo(true);
-                        isShowingBudgetInfo = true;
                     }
                     getView().setBudgetComicCount(comics.size());
                     getView().setBudgetComicPrice(totalPrice(comics));
@@ -150,9 +145,5 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
             total = total.add(BigDecimal.valueOf(comic.lowestPrice()));
         }
         return total.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
-    }
-
-    private boolean haveBudget() {
-        return budget.compareTo(BigDecimal.ZERO) >= 0;
     }
 }

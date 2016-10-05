@@ -1,9 +1,9 @@
 package com.spectrl.comix.collection.view;
 
 import com.spectrl.comix.collection.data.model.Comic;
+import com.spectrl.comix.collection.view.model.Budget;
 import com.spectrl.comix.view.View;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -18,6 +18,8 @@ public interface CollectionContract {
 
         void setProgressIndicator(boolean active);
 
+        void setRefreshEnabled(boolean enabled);
+
         void showPageCount(int count);
 
         void showBudgetInfo(boolean active);
@@ -26,7 +28,7 @@ public interface CollectionContract {
 
         void setBudgetComicPrice(String price);
 
-        void setRefreshEnabled(boolean enabled);
+        boolean isShowingBudgetInfo();
 
         // TODO: 22/09/2016 Error state
     }
@@ -37,10 +39,8 @@ public interface CollectionContract {
 
         void onComicChosen(Comic comic);
 
-        void onBudget(boolean active);
-
-        void onSetBudget(BigDecimal budget);
-
         void onPageCount();
+
+        void onBudget(Budget budget);
     }
 }

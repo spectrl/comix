@@ -16,6 +16,8 @@ import com.spectrl.comix.BaseActivity;
 import com.spectrl.comix.R;
 import com.spectrl.comix.collection.presenter.CollectionPresenter;
 import com.spectrl.comix.collection.view.CollectionView;
+import com.spectrl.comix.collection.view.model.Budget;
+import com.spectrl.comix.collection.view.model.Budget.Action;
 import com.spectrl.comix.di.activity.ActivityComponent;
 import com.spectrl.comix.di.activity.ActivityModule;
 import com.spectrl.comix.di.application.Injector;
@@ -56,13 +58,18 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
         collectionPresenter.takeView(collectionView);
 
         budgetSubscription = RxTextView.textChangeEvents(budget)
+                .skip(1) // Skip initial emmision on subscribe
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(changes -> TextUtils.isEmpty(changes.text())
                         ? BigDecimal.valueOf(-1)
                         : new BigDecimal(changes.text().toString()))
                 .subscribe(budget -> {
-                    collectionPresenter.onSetBudget(budget);
+                    if (budget.compareTo(BigDecimal.valueOf(-1)) == 0) {
+                        collectionPresenter.onBudget(Budget.create(Action.CLEAR));
+                    } else {
+                        collectionPresenter.onBudget(Budget.create(Action.UPDATE, budget));
+                    }
                 });
 
         collectionPresenter.enter();
@@ -102,7 +109,7 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
                             (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
-                collectionPresenter.onBudget(false);
+                collectionPresenter.onBudget(Budget.create(Action.CLOSE));
             } else {
                 item.setIcon(R.drawable.ic_close_white_24dp);
                 budget.setVisibility(View.VISIBLE);
@@ -110,7 +117,7 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
                 InputMethodManager imm =
                         (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(budget, InputMethodManager.SHOW_IMPLICIT);
-                collectionPresenter.onBudget(true);
+                collectionPresenter.onBudget(Budget.create(Action.OPEN));
             }
             return true;
         }
