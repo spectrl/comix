@@ -116,6 +116,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
                         isShowingBudgetInfo = true;
                     }
                     getView().setBudgetComicCount(comics.size());
+                    getView().setBudgetComicPrice(totalPrice(comics));
                 }));
     }
 
@@ -131,6 +132,14 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
             pages += comic.pageCount();
         }
         return pages;
+    }
+
+    private String totalPrice(List<Comic> comics) {
+        BigDecimal total = BigDecimal.ZERO;
+        for (Comic comic : comics) {
+            total = total.add(BigDecimal.valueOf(comic.lowestPrice()));
+        }
+        return total.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
     }
 
     private boolean haveBudget() {

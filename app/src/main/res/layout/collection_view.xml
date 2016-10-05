@@ -23,6 +23,14 @@
             android:layout_gravity="center_vertical|start"
             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"/>
 
+        <TextView
+            android:id="@+id/budget_comic_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:layout_gravity="center_vertical|end"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"/>
+
     </FrameLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout

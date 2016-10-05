@@ -34,6 +34,7 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     @BindView(R.id.collection_view_container) ViewGroup container;
     @BindView(R.id.budget_info) View budgetInfo;
     @BindView(R.id.budget_comic_count) TextView budgetComicCount;
+    @BindView(R.id.budget_comic_price) TextView budgetComicPrice;
     @BindView(R.id.swipe_layout) SwipeRefreshLayout swipeLayout;
     @BindView(R.id.comics_recyclerview) RecyclerView comicsRecyclerView;
 
@@ -94,6 +95,11 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     @Override
     public void setBudgetComicCount(int count) {
         budgetComicCount.setText(getContext().getString(R.string.comics_in_budget, count));
+    }
+
+    @Override
+    public void setBudgetComicPrice(String price) {
+        budgetComicPrice.setText(getContext().getString(R.string.budget_total_price, price));
     }
 
     @Override
