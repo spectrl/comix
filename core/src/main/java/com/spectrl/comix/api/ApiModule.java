@@ -1,5 +1,8 @@
 package com.spectrl.comix.api;
 
+import com.spectrl.comix.di.CacheInterceptor;
+import com.spectrl.comix.di.OfflineCacheInterceptor;
+import com.spectrl.comix.util.Connection;
 import com.squareup.moshi.Moshi;
 
 import java.io.File;
@@ -14,6 +17,7 @@ import okhttp3.CacheControl;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -56,7 +60,7 @@ public class ApiModule {
         return new Cache(new File(cacheDirectory, HTTP_CACHE_DIR), CACHE_SIZE);
     }
 
-    @Provides @Singleton
+    @Provides @Singleton @CacheInterceptor
     Interceptor provideCacheControlInterceptor() {
         return chain -> {
             Response originalResponse = chain.proceed(chain.request());
@@ -69,14 +73,33 @@ public class ApiModule {
         };
     }
 
+    @Provides @Singleton @OfflineCacheInterceptor
+    Interceptor provideOfflineCacheInterceptor(Connection connection) {
+        return chain -> {
+            Request originalRequest = chain.request();
+            if (!connection.connected()) {
+                CacheControl cacheControl = new CacheControl.Builder()
+                        .maxStale(24, TimeUnit.HOURS)
+                        .build();
+                originalRequest = originalRequest.newBuilder()
+                        .cacheControl(cacheControl)
+                        .build();
+            }
+            return chain.proceed(originalRequest);
+        };
+    }
+
     @Provides @Singleton
-    OkHttpClient provideOkHttpClient(MarvelAuthorizationInterceptor marvelAuthorizationInterceptor, Interceptor cacheControl, Cache cache) {
+    OkHttpClient provideOkHttpClient(MarvelAuthorizationInterceptor marvelAuthorizationInterceptor,
+                                     @CacheInterceptor Interceptor cacheControl,
+                                     @OfflineCacheInterceptor Interceptor offlineCacheControl, Cache cache) {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(isDebug ? Level.HEADERS : Level.NONE);
         return new OkHttpClient.Builder()
                 .addInterceptor(logging)
                 .addInterceptor(marvelAuthorizationInterceptor)
                 .addInterceptor(cacheControl)
+                .addInterceptor(offlineCacheControl)
                 .cache(cache)
                 .build();
     }

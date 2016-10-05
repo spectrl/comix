@@ -5,6 +5,8 @@ import android.app.Application;
 import com.spectrl.comix.BuildConfig;
 import com.spectrl.comix.api.MarvelAuthorizationInterceptor;
 import com.spectrl.comix.di.MainThread;
+import com.spectrl.comix.util.Connection;
+import com.spectrl.comix.util.Connectivity;
 
 import java.io.File;
 
@@ -50,5 +52,10 @@ public class ApplicationModule {
     @Provides @Singleton
     File provideCacheDirectory() {
         return application.getCacheDir();
+    }
+
+    @Provides @Singleton
+    Connection provideConnection() {
+        return new Connectivity(application);
     }
 }
