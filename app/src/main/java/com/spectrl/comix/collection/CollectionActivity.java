@@ -26,6 +26,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class CollectionActivity extends BaseActivity<ActivityComponent> {
 
@@ -45,6 +46,7 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
         budget.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(null, 2)});
         budgetSubscription = RxTextView.textChangeEvents(budget)
                 .debounce(400, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
                 .map(changes -> TextUtils.isEmpty(changes.text())
                         ? -1.00
                         : Double.parseDouble(changes.text().toString()))
