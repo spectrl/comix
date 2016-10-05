@@ -10,12 +10,16 @@
         android:id="@+id/budget_info"
         android:layout_width="match_parent"
         android:layout_height="@dimen/budget_info_height"
-        android:padding="16dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             android:id="@+id/budget_comic_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="start"
             android:layout_gravity="center_vertical|start"
             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"/>
 

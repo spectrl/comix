@@ -92,11 +92,12 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
 
         // If we have no budget, load everything
         if (!haveBudget()) {
-            refreshComics(false);
             if (hasView() && isShowingBudgetInfo) {
                 getView().showBudgetInfo(false);
                 isShowingBudgetInfo = false;
             }
+
+            refreshComics(false);
             return;
         }
 
@@ -109,13 +110,13 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
                 .subscribe(comics -> {
                     if (!hasView()) { return; }
                     getView().displayComics(comics);
-                }));
 
-        if (!isShowingBudgetInfo) {
-            if (!hasView()) { return; }
-            getView().showBudgetInfo(true);
-            isShowingBudgetInfo = true;
-        }
+                    if (!isShowingBudgetInfo) {
+                        getView().showBudgetInfo(true);
+                        isShowingBudgetInfo = true;
+                    }
+                    getView().setBudgetComicCount(comics.size());
+                }));
     }
 
     @Override

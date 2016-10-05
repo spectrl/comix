@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.spectrl.comix.R;
 import com.spectrl.comix.collection.data.model.Comic;
@@ -32,6 +33,7 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
 
     @BindView(R.id.collection_view_container) ViewGroup container;
     @BindView(R.id.budget_info) View budgetInfo;
+    @BindView(R.id.budget_comic_count) TextView budgetComicCount;
     @BindView(R.id.swipe_layout) SwipeRefreshLayout swipeLayout;
     @BindView(R.id.comics_recyclerview) RecyclerView comicsRecyclerView;
 
@@ -87,6 +89,11 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     @Override
     public void showBudgetInfo(boolean active) {
         animateView(active);
+    }
+
+    @Override
+    public void setBudgetComicCount(int count) {
+        budgetComicCount.setText(getContext().getString(R.string.comics_in_budget, count));
     }
 
     @Override

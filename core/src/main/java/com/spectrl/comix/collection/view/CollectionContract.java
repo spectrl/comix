@@ -22,6 +22,8 @@ public interface CollectionContract {
 
         void showBudgetInfo(boolean active);
 
+        void setBudgetComicCount(int count);
+
         // TODO: 22/09/2016 Error state
     }
 
