@@ -6,6 +6,8 @@ import com.spectrl.comix.BuildConfig;
 import com.spectrl.comix.api.MarvelAuthorizationInterceptor;
 import com.spectrl.comix.di.MainThread;
 
+import java.io.File;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -43,5 +45,10 @@ public class ApplicationModule {
     @Provides @Singleton
     MarvelAuthorizationInterceptor provideMarvelAuthorizationInterceptor() {
         return new MarvelAuthorizationInterceptor(BuildConfig.MARVEL_PUBLIC_KEY, BuildConfig.MARVEL_PRIVATE_KEY);
+    }
+
+    @Provides @Singleton
+    File provideCacheDirectory() {
+        return application.getCacheDir();
     }
 }

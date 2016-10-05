@@ -2,10 +2,13 @@ package com.spectrl.comix.api;
 
 import com.squareup.moshi.Moshi;
 
+import java.io.File;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -22,6 +25,8 @@ import static okhttp3.logging.HttpLoggingInterceptor.*;
 @Module
 public class ApiModule {
     private static final String MARVEL_API_URL = "http://gateway.marvel.com/";
+    private static final String HTTP_CACHE_DIR = "http-cache";
+    private static final int CACHE_SIZE = 10 * 1024 * 1024; // 10 MiB
 
     private final boolean isDebug;
 
@@ -42,12 +47,18 @@ public class ApiModule {
     }
 
     @Provides @Singleton
-    OkHttpClient provideOkHttpClient(MarvelAuthorizationInterceptor marvelAuthorizationInterceptor) {
+    Cache provideCache(File cacheDirectory) {
+        return new Cache(new File(cacheDirectory, HTTP_CACHE_DIR), CACHE_SIZE);
+    }
+
+    @Provides @Singleton
+    OkHttpClient provideOkHttpClient(MarvelAuthorizationInterceptor marvelAuthorizationInterceptor, Cache cache) {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(isDebug ? Level.BASIC : Level.NONE);
         return new OkHttpClient.Builder()
                 .addInterceptor(marvelAuthorizationInterceptor)
                 .addInterceptor(logging)
+                .cache(cache)
                 .build();
     }
 
