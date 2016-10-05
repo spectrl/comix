@@ -102,6 +102,7 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
                             (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
+                collectionPresenter.onBudget(false);
             } else {
                 item.setIcon(R.drawable.ic_close_white_24dp);
                 budget.setVisibility(View.VISIBLE);
@@ -109,6 +110,7 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
                 InputMethodManager imm =
                         (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(budget, InputMethodManager.SHOW_IMPLICIT);
+                collectionPresenter.onBudget(true);
             }
             return true;
         }

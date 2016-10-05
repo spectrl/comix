@@ -103,6 +103,11 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     }
 
     @Override
+    public void setRefreshEnabled(boolean enabled) {
+        swipeLayout.setEnabled(enabled);
+    }
+
+    @Override
     public void attach(final CollectionInteractionListener interactionListener) {
         this.interactionListener = interactionListener;
         swipeLayout.setOnRefreshListener(() -> interactionListener.refreshComics(true));

@@ -86,19 +86,29 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     }
 
     @Override
+    public void onBudget(boolean active) {
+        if (!hasView()) { return; }
+        getView().setRefreshEnabled(!active);
+    }
+
+    @Override
     public void onSetBudget(BigDecimal budget) {
         LOGGER.log(Level.INFO, String.format(Locale.ENGLISH, "Budget is %f", budget));
         this.budget = budget;
 
+        // TODO: 05/10/2016 Refactor this into explicit isBudgetMode 
         // If we have no budget, load everything
         if (!haveBudget()) {
-            if (hasView() && isShowingBudgetInfo) {
+            if (isShowingBudgetInfo && hasView()) {
                 getView().showBudgetInfo(false);
                 isShowingBudgetInfo = false;
             }
 
             refreshComics(false);
             return;
+        } else {
+            if (!hasView()) { return; }
+            getView().setRefreshEnabled(false);
         }
 
         // Otherwise display comics in budget

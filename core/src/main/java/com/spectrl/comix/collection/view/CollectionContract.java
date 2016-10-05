@@ -26,6 +26,8 @@ public interface CollectionContract {
 
         void setBudgetComicPrice(String price);
 
+        void setRefreshEnabled(boolean enabled);
+
         // TODO: 22/09/2016 Error state
     }
 
@@ -34,6 +36,8 @@ public interface CollectionContract {
         void refreshComics(boolean forceUpdate);
 
         void onComicChosen(Comic comic);
+
+        void onBudget(boolean active);
 
         void onSetBudget(BigDecimal budget);
 
