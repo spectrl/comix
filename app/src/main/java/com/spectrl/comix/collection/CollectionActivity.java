@@ -2,7 +2,6 @@ package com.spectrl.comix.collection;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -43,8 +42,6 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
 
     private Subscription budgetSubscription;
 
-    private boolean isExpanded;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,13 +58,6 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
         budgetSubscription = RxTextView.textChangeEvents(budget)
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(textViewTextChangeEvent -> {
-                    if (!TextUtils.isEmpty(textViewTextChangeEvent.text()) && !isExpanded) {
-                        animateView(true);
-                    } else if (TextUtils.isEmpty(textViewTextChangeEvent.text()) && isExpanded) {
-                        animateView(false);
-                    }
-                })
                 .map(changes -> TextUtils.isEmpty(changes.text())
                         ? BigDecimal.valueOf(-1)
                         : new BigDecimal(changes.text().toString()))
@@ -143,24 +133,5 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
     @Override
     protected int getContentView() {
         return R.layout.activity_collection;
-    }
-
-    private void setCollectionViewBottomPadding(int bottomPadding) {
-        collectionView.setPadding(
-                collectionView.getPaddingLeft(),
-                collectionView.getPaddingTop(),
-                collectionView.getPaddingRight(),
-                bottomPadding);
-    }
-
-    private void animateView(boolean expand) {
-        int distance = toolbar.getMeasuredHeight();
-        ViewCompat.animate(collectionView)
-                .yBy(distance * ((expand) ? 1 : -1))
-                .withEndAction(() -> {
-                    setCollectionViewBottomPadding(expand ? distance : collectionViewPadding);
-                    this.isExpanded = expand;
-                })
-                .start();
     }
 }

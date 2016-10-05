@@ -1,15 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipe_layout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/collection_view_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/budget_info_height_adjustment"
+    android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/comics_recyclerview"
+    <FrameLayout
+        android:id="@+id/budget_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:clipToPadding="false"/>
+        android:layout_height="@dimen/budget_info_height"
+        android:padding="16dp">
 
-</android.support.v4.widget.SwipeRefreshLayout>
+        <TextView
+            android:id="@+id/budget_comic_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"/>
+
+    </FrameLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comics_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/grid_spacing"
+            android:clipToPadding="false"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

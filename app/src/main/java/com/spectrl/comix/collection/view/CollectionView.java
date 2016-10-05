@@ -2,11 +2,13 @@ package com.spectrl.comix.collection.view;
 
 import android.content.Context;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.spectrl.comix.R;
@@ -14,6 +16,7 @@ import com.spectrl.comix.collection.data.model.Comic;
 
 import java.util.List;
 
+import butterknife.BindDimen;
 import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,10 +30,13 @@ import static com.spectrl.comix.collection.view.CollectionContract.CollectionInt
 
 public class CollectionView extends FrameLayout implements CollectionContract.CollectionView {
 
+    @BindView(R.id.collection_view_container) ViewGroup container;
+    @BindView(R.id.budget_info) View budgetInfo;
     @BindView(R.id.swipe_layout) SwipeRefreshLayout swipeLayout;
     @BindView(R.id.comics_recyclerview) RecyclerView comicsRecyclerView;
 
     @BindInt(R.integer.num_columns) int columns;
+    @BindDimen(R.dimen.grid_spacing) int gridPadding;
 
     private Unbinder unbinder;
 
@@ -79,6 +85,11 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     }
 
     @Override
+    public void showBudgetInfo(boolean active) {
+        animateView(active);
+    }
+
+    @Override
     public void attach(final CollectionInteractionListener interactionListener) {
         this.interactionListener = interactionListener;
         swipeLayout.setOnRefreshListener(() -> interactionListener.refreshComics(true));
@@ -89,5 +100,21 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     public void detach(CollectionInteractionListener interactionListener) {
         this.interactionListener = null;
         collectionAdapter.setInteractionListener(null);
+    }
+
+    private void animateView(boolean expand) {
+        int distance = budgetInfo.getMeasuredHeight();
+        ViewCompat.animate(container)
+                .yBy(distance * ((expand) ? 1 : -1))
+                .withEndAction(() -> setRecyclerViewBottomPadding(expand ? distance : gridPadding * 2))
+                .start();
+    }
+
+    private void setRecyclerViewBottomPadding(int bottomPadding) {
+        comicsRecyclerView.setPadding(
+                comicsRecyclerView.getPaddingLeft(),
+                comicsRecyclerView.getPaddingTop(),
+                comicsRecyclerView.getPaddingRight(),
+                bottomPadding);
     }
 }
