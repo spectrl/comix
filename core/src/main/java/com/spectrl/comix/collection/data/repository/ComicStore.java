@@ -10,6 +10,7 @@ import java.util.List;
 
 import rx.Observable;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Kavi @ SPECTRL Ltd. on 22/09/2016.
@@ -28,6 +29,7 @@ public class ComicStore implements ComicsRepository {
     @Override
     public Observable<List<Comic>> fetchComics(int limit) {
         return marvelService.getComics(limit)
+                .subscribeOn(Schedulers.io())
                 .map(marvelApiResponse -> marvelApiResponse.data().results());
     }
 
@@ -35,6 +37,7 @@ public class ComicStore implements ComicsRepository {
     public Observable<List<Comic>> comicsInBudget(BigDecimal budget) {
         final BigDecimal[] remainingBudget = {budget};
         return fetchComics(DEFAULT_LIMIT)
+                .observeOn(Schedulers.computation())
                 .map(comics -> {
                     Collections.sort(comics, Comic.byPrice());
                     return comics;
