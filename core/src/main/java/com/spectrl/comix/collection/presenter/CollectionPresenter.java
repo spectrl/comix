@@ -48,7 +48,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     @Override
     public void enter() {
         getView().attach(this);
-        refreshComics();
+        refreshComics(true);
     }
 
     @Override
@@ -57,12 +57,12 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     }
 
     @Override
-    public void refreshComics() {
+    public void refreshComics(boolean forceUpdate) {
         subscriptions.add(comicsRepository.fetchComics(COMIC_LIMIT)
                 .subscribeOn(Schedulers.io())
                 .observeOn(mainThread)
                 .doOnSubscribe(() -> {
-                    if (!hasView()) { return; }
+                    if (!hasView() || !forceUpdate) { return; }
                     getView().setProgressIndicator(true);
                 })
                 .doOnNext(comics -> totalPageCount = countPages(comics))
@@ -89,7 +89,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
 
         // If we have no budget, load everything
         if (budget == -1) {
-            refreshComics();
+            refreshComics(false);
             return;
         }
 

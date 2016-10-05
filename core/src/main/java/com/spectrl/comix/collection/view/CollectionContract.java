@@ -24,7 +24,7 @@ public interface CollectionContract {
 
     interface CollectionInteractionListener extends View.InteractionListener {
 
-        void refreshComics();
+        void refreshComics(boolean forceUpdate);
 
         void onComicChosen(Comic comic);
 
