@@ -4,11 +4,11 @@ import com.spectrl.comix.api.MarvelService;
 import com.spectrl.comix.collection.data.model.Comic;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * Created by Kavi @ SPECTRL Ltd. on 22/09/2016.
@@ -32,20 +32,20 @@ public class ComicStore implements ComicsRepository {
 
     @Override
     public Observable<List<Comic>> comicsInBudget(BigDecimal budget) {
+        final BigDecimal[] remainingBudget = {budget};
         return fetchComics(DEFAULT_LIMIT)
                 .map(comics -> {
                     Collections.sort(comics, Comic.byPrice());
-                    List<Comic> withinBudget = new ArrayList<>();
-                    BigDecimal budgetRemaining = budget;
-                    for (Comic comic : comics) {
-                        BigDecimal lowestPrice = new BigDecimal(String.valueOf(comic.lowestPrice()));
-                        budgetRemaining = budgetRemaining.subtract(lowestPrice);
-                        if (budgetRemaining.signum() == -1) {
-                            break;
-                        }
-                        withinBudget.add(comic);
+                    return comics;
+                })
+                .flatMap(new Func1<List<Comic>, Observable<Comic>>() {
+                    @Override
+                    public Observable<Comic> call(List<Comic> comics) {
+                        return Observable.from(comics);
                     }
-                    return withinBudget;
-                });
+                })
+                .filter(comic -> BigDecimal.valueOf(comic.lowestPrice()).compareTo(remainingBudget[0]) < 0)
+                .doOnNext(comic -> remainingBudget[0] = remainingBudget[0].subtract(BigDecimal.valueOf(comic.lowestPrice())))
+                .toList();
     }
 }
