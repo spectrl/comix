@@ -2,6 +2,7 @@ package com.spectrl.comix.collection.data.repository;
 
 import com.spectrl.comix.collection.data.model.Comic;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import rx.Observable;
@@ -13,4 +14,6 @@ import rx.Observable;
 public interface ComicsRepository {
 
     Observable<List<Comic>> fetchComics(int limit);
+
+    Observable<List<Comic>> comicsInBudget(BigDecimal budget);
 }

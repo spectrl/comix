@@ -6,8 +6,6 @@ import com.spectrl.comix.di.MainThread;
 import com.spectrl.comix.presenter.BasePresenter;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -39,7 +37,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     private final ComicsRepository comicsRepository;
 
     private int totalPageCount;
-    private double budget = -1;
+    private BigDecimal budget = BigDecimal.valueOf(-1);
 
     @Inject
     public CollectionPresenter(ComicsRepository comicsRepository) {
@@ -49,7 +47,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     @Override
     public void enter() {
         getView().attach(this);
-        if (budget == -1) {
+        if (!haveBudget()) {
             refreshComics(true);
         }
     }
@@ -87,38 +85,20 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     }
 
     @Override
-    public void onSetBudget(double budget) {
+    public void onSetBudget(BigDecimal budget) {
         LOGGER.log(Level.INFO, String.format(Locale.ENGLISH, "Budget is %f", budget));
         this.budget = budget;
 
         // If we have no budget, load everything
-        if (budget == -1) {
+        if (!haveBudget()) {
             refreshComics(false);
             return;
         }
 
-        // Otherwise work out what we can afford
-        subscriptions.add(comicsRepository.fetchComics(COMIC_LIMIT)
+        // Otherwise display comics in budget
+        subscriptions.add(comicsRepository.comicsInBudget(budget)
                 .subscribeOn(Schedulers.io())
                 .observeOn(mainThread)
-                .map(comics -> {
-                    List<Comic> sortedList = new ArrayList<>(comics);
-                    Collections.sort(sortedList, Comic.byPrice());
-                    return sortedList;
-                })
-                .map(comics -> {
-                    List<Comic> withinBudget = new ArrayList<>();
-                    BigDecimal budgetRemaining = new BigDecimal(String.valueOf(budget));
-                    for (Comic comic : comics) {
-                        BigDecimal lowestPrice = new BigDecimal(String.valueOf(comic.lowestPrice()));
-                        budgetRemaining = budgetRemaining.subtract(lowestPrice);
-                        if (budgetRemaining.signum() == -1) {
-                            break;
-                        }
-                        withinBudget.add(comic);
-                    }
-                    return withinBudget;
-                })
                 .doOnNext(comics -> totalPageCount = countPages(comics))
                 .doOnError(throwable -> totalPageCount = 0)
                 .subscribe(comics -> {
@@ -139,5 +119,9 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
             pages += comic.pageCount();
         }
         return pages;
+    }
+
+    private boolean haveBudget() {
+        return budget.compareTo(BigDecimal.ZERO) >= 0;
     }
 }

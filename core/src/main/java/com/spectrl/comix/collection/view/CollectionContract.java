@@ -3,6 +3,7 @@ package com.spectrl.comix.collection.view;
 import com.spectrl.comix.collection.data.model.Comic;
 import com.spectrl.comix.view.View;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public interface CollectionContract {
 
         void onComicChosen(Comic comic);
 
-        void onSetBudget(double budget);
+        void onSetBudget(BigDecimal budget);
 
         void onPageCount();
     }

@@ -20,6 +20,7 @@ import com.spectrl.comix.di.activity.ActivityComponent;
 import com.spectrl.comix.di.activity.ActivityModule;
 import com.spectrl.comix.di.application.Injector;
 
+import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -55,8 +56,8 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(changes -> TextUtils.isEmpty(changes.text())
-                        ? -1.00
-                        : Double.parseDouble(changes.text().toString()))
+                        ? BigDecimal.valueOf(-1)
+                        : new BigDecimal(changes.text().toString()))
                 .subscribe(budget -> {
                     collectionPresenter.onSetBudget(budget);
                 });
