@@ -1,6 +1,7 @@
 package com.spectrl.comix.collection.data.repository;
 
 import com.spectrl.comix.api.MarvelService;
+import com.spectrl.comix.collection.data.BudgetPredicate;
 import com.spectrl.comix.collection.data.model.Comic;
 
 import java.math.BigDecimal;
@@ -44,7 +45,7 @@ public class ComicStore implements ComicsRepository {
                         return Observable.from(comics);
                     }
                 })
-                .filter(comic -> BigDecimal.valueOf(comic.lowestPrice()).compareTo(remainingBudget[0]) < 0)
+                .filter(comic -> new BudgetPredicate(remainingBudget[0]).test(comic))
                 .doOnNext(comic -> remainingBudget[0] = remainingBudget[0].subtract(BigDecimal.valueOf(comic.lowestPrice())))
                 .toList();
     }
