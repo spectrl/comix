@@ -30,7 +30,9 @@ public class ComicStore implements ComicsRepository {
     @Override
     public Observable<List<Comic>> fetchComics(int limit) {
         return Observable.merge(
-                networkSource.getComics(limit).subscribeOn(Schedulers.io()),
+                networkSource.getComics(limit)
+                        .doOnNext(comics -> diskCache.put(COMIC_CACHE_KEY, comics).subscribe())
+                        .subscribeOn(Schedulers.io()),
                 diskCache.get(COMIC_CACHE_KEY).subscribeOn(Schedulers.io()))
                 .filter(comics -> comics != null); // e.g. Ignore empty cache
     }

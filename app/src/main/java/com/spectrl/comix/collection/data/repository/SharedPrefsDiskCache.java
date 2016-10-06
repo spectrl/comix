@@ -31,9 +31,10 @@ public class SharedPrefsDiskCache implements DiskCache<String, List<Comic>> {
     }
 
     @Override
-    public Completable put(String key, List<Comic> item) {
+    public Completable put(String key, List<Comic> comics) {
+        String json = jsonAdapter.toJson(comics);
         return Completable.fromAction(() -> sharedPrefs.edit()
-                .putString(key, jsonAdapter.toJson(item))
+                .putString(key, json)
                 .apply());
     }
 
