@@ -28,7 +28,7 @@ public abstract class Comics {
 
     public static Builder builder() {
         return new AutoValue_Comics.Builder()
-                .timestamp(System.currentTimeMillis() / 1000);
+                .timestamp(System.currentTimeMillis() / 1000L);
     }
 
     @AutoValue.Builder
@@ -43,6 +43,15 @@ public abstract class Comics {
 
     public static JsonAdapter<Comics> jsonAdapter(Moshi moshi) {
         return new AutoValue_Comics.MoshiJsonAdapter(moshi);
+    }
+
+    /**
+     *
+     * @param maxAge in seconds
+     * @return boolean indicating whether the data is newer than the max age specified
+     */
+    public boolean isFresh(long maxAge) {
+        return System.currentTimeMillis() / 1000L - timestamp() <= maxAge;
     }
 
     public Comic getComicAt(int position) {

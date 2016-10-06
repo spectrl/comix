@@ -5,6 +5,7 @@ import com.spectrl.comix.collection.data.model.Comic;
 import com.spectrl.comix.collection.data.model.Comics;
 
 import java.math.BigDecimal;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +22,7 @@ public class ComicStore implements ComicsRepository {
 
     private static final int DEFAULT_LIMIT = 100;
     private static final String COMIC_CACHE_KEY = "key_comics_list";
+    private static final long CACHE_MAX_STALE = TimeUnit.SECONDS.convert(24, TimeUnit.HOURS);
 
     private final RetrofitNetworkSource networkSource;
     private final DiskCache<String, Comics> diskCache;
@@ -41,7 +43,8 @@ public class ComicStore implements ComicsRepository {
                     LOGGER.log(Level.SEVERE, throwable.getMessage(), throwable);
                     return null;
                 })
-                .filter(comics -> comics != null) // e.g. Ignore empty cache or error
+                .filter(comics -> comics != null // e.g. Ignore empty cache or error
+                        && comics.isFresh(CACHE_MAX_STALE)) // Only emit data newer than max stale
                 .share();
     }
 
