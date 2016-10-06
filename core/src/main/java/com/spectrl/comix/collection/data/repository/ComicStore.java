@@ -63,7 +63,8 @@ public class ComicStore implements ComicsRepository {
                     }
                 })
                 .filter(comic -> new BudgetPredicate(remainingBudget[0]).test(comic))
-                .doOnNext(comic -> remainingBudget[0] = remainingBudget[0].subtract(BigDecimal.valueOf(comic.lowestPrice())))
+                .doOnNext(comic -> remainingBudget[0] =
+                        remainingBudget[0].subtract(new BigDecimal(String.valueOf(comic.lowestPrice()))))
                 .toList();
     }
 }

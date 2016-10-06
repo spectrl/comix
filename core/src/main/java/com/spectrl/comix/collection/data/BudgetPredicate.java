@@ -19,6 +19,6 @@ public class BudgetPredicate implements Predicate<Comic> {
 
     @Override
     public boolean test(Comic comic) {
-        return BigDecimal.valueOf(comic.lowestPrice()).compareTo(budget) <= 0;
+        return new BigDecimal(String.valueOf(comic.lowestPrice())).compareTo(budget) <= 0;
     }
 }
