@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 /**
  * Created by Kavi @ SPECTRL Ltd. on 22/09/2016.
  */
@@ -19,7 +21,7 @@ public abstract class Comic {
     public abstract int id();
     public abstract String title();
     public abstract double issueNumber();
-    public abstract String description();
+    @Nullable public abstract String description();
     public abstract int pageCount();
     public abstract Image thumbnail();
     public abstract List<Price> prices();

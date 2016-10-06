@@ -39,6 +39,7 @@ ext {
             loggingInterceptor: '3.4.1',
             glide:              '3.7.0',
             glideOkHttp3:       '1.4.0',
+            jsr305:             '3.0.1',
 
             junit:              '4.12',
             mockito:            '2.1.0-RC.1',
@@ -77,6 +78,8 @@ ext {
             rxJava:                "io.reactivex:rxjava:${versions.rxJava}",
             rxAndroid:             "io.reactivex:rxandroid:${versions.rxAndroid}",
             rxBinding:             "com.jakewharton.rxbinding:rxbinding:${versions.rxBinding}",
+
+            jsr305:                "com.google.code.findbugs:jsr305:${versions.jsr305}",
 
             junit:                 "junit:junit:${versions.junit}",
             mockito:               "org.mockito:mockito-core:${versions.mockito}",
