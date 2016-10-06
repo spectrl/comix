@@ -71,6 +71,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
                     getView().setProgressIndicator(false);
                     getView().displayComics(comics);
                 }, throwable -> {
+                    LOGGER.log(Level.SEVERE, throwable.getMessage(), throwable);
                     if (!hasView()) { return; }
                     getView().setProgressIndicator(false);
                     // TODO: 02/10/2016 Display error

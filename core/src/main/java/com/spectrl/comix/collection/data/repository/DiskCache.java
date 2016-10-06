@@ -6,7 +6,7 @@ import rx.Observable;
 /**
  * Created by Kavi @ SPECTRL Ltd. on 15/07/15.
  */
-interface DiskCache<K, V> {
+public interface DiskCache<K, V> {
 
     Completable put(K key, V value);
 

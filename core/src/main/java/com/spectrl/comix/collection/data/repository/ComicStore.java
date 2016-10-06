@@ -17,17 +17,22 @@ import rx.schedulers.Schedulers;
 
 public class ComicStore implements ComicsRepository {
     private static final int DEFAULT_LIMIT = 100;
+    private static final String COMIC_CACHE_KEY = "key_comics_list";
 
     private final RetrofitNetworkSource networkSource;
+    private final DiskCache<String, List<Comic>> diskCache;
 
-    public ComicStore(RetrofitNetworkSource networkSource) {
+    public ComicStore(RetrofitNetworkSource networkSource, DiskCache<String, List<Comic>> diskCache) {
         this.networkSource = networkSource;
+        this.diskCache = diskCache;
     }
 
     @Override
     public Observable<List<Comic>> fetchComics(int limit) {
-        return networkSource.getComics(limit)
-                .subscribeOn(Schedulers.io());
+        return Observable.merge(
+                networkSource.getComics(limit).subscribeOn(Schedulers.io()),
+                diskCache.get(COMIC_CACHE_KEY).subscribeOn(Schedulers.io()))
+                .filter(comics -> comics != null); // e.g. Ignore empty cache
     }
 
     @Override
