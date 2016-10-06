@@ -14,6 +14,8 @@ import rx.Observable;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
+import static com.spectrl.comix.collection.data.model.Comics.*;
+
 /**
  * Created by Kavi @ SPECTRL Ltd. on 22/09/2016.
  */
@@ -58,7 +60,6 @@ public class ComicStore implements ComicsRepository {
     public Observable<Comics> comicsInBudget(BigDecimal budget) {
         final BigDecimal[] remainingBudget = {budget};
         return fetchComics(DEFAULT_LIMIT)
-                .first()
                 .observeOn(Schedulers.computation())
                 .map(Comics::sortedByPrice)
                 .flatMap(new Func1<Comics, Observable<Comic>>() {
@@ -71,8 +72,9 @@ public class ComicStore implements ComicsRepository {
                 .doOnNext(comic -> remainingBudget[0] =
                         remainingBudget[0].subtract(new BigDecimal(String.valueOf(comic.lowestPrice()))))
                 .toList()
-                .map(comics -> Comics.builder()
+                .map(comics -> builder()
                         .comicList(comics)
+                        .source(Source.MEMORY)
                         .build());
     }
 }
