@@ -91,6 +91,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
                 getView().setRefreshEnabled(false);
                 break;
             case CLOSE:
+                refreshComics(false);
                 if (!hasView()) { return; }
                 getView().setRefreshEnabled(true);
                 if (getView().isShowingBudgetInfo()) {
