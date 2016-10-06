@@ -1,8 +1,8 @@
 package com.spectrl.comix.di;
 
-import com.spectrl.comix.api.MarvelService;
 import com.spectrl.comix.collection.data.repository.ComicStore;
 import com.spectrl.comix.collection.data.repository.ComicsRepository;
+import com.spectrl.comix.collection.data.repository.source.RetrofitNetworkSource;
 
 import javax.inject.Singleton;
 
@@ -18,7 +18,7 @@ public class DataModule {
 
     @Provides
     @Singleton
-    ComicsRepository provideComicsRepository(MarvelService marvelService) {
-        return new ComicStore(marvelService);
+    ComicsRepository provideComicsRepository(RetrofitNetworkSource networkSource) {
+        return new ComicStore(networkSource);
     }
 }

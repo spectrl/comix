@@ -1,8 +1,8 @@
 package com.spectrl.comix.collection.data.repository;
 
-import com.spectrl.comix.api.MarvelService;
 import com.spectrl.comix.collection.data.BudgetPredicate;
 import com.spectrl.comix.collection.data.model.Comic;
+import com.spectrl.comix.collection.data.repository.source.RetrofitNetworkSource;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -19,18 +19,16 @@ import rx.schedulers.Schedulers;
 public class ComicStore implements ComicsRepository {
     private static final int DEFAULT_LIMIT = 100;
 
-    // This could be split into separate interfaces per feature for larger applications
-    private final MarvelService marvelService;
+    private final RetrofitNetworkSource networkSource;
 
-    public ComicStore(MarvelService marvelService) {
-        this.marvelService = marvelService;
+    public ComicStore(RetrofitNetworkSource networkSource) {
+        this.networkSource = networkSource;
     }
 
     @Override
     public Observable<List<Comic>> fetchComics(int limit) {
-        return marvelService.getComics(limit)
-                .subscribeOn(Schedulers.io())
-                .map(marvelApiResponse -> marvelApiResponse.data().results());
+        return networkSource.getComics(limit)
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
