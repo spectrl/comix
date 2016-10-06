@@ -6,6 +6,8 @@ import com.spectrl.comix.collection.data.model.Comic;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import rx.Observable;
 import rx.functions.Func1;
@@ -16,6 +18,8 @@ import rx.schedulers.Schedulers;
  */
 
 public class ComicStore implements ComicsRepository {
+    private final static Logger LOGGER = Logger.getLogger(ComicStore.class.getName());
+
     private static final int DEFAULT_LIMIT = 100;
     private static final String COMIC_CACHE_KEY = "key_comics_list";
 
@@ -34,7 +38,11 @@ public class ComicStore implements ComicsRepository {
                         .doOnNext(comics -> diskCache.put(COMIC_CACHE_KEY, comics).subscribe())
                         .subscribeOn(Schedulers.io()),
                 diskCache.get(COMIC_CACHE_KEY).subscribeOn(Schedulers.io()))
-                .filter(comics -> comics != null); // e.g. Ignore empty cache
+                .onErrorReturn(throwable -> {
+                    LOGGER.log(Level.SEVERE, throwable.getMessage(), throwable);
+                    return null;
+                })
+                .filter(comics -> comics != null); // e.g. Ignore empty cache or error
     }
 
     @Override
