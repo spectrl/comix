@@ -2,7 +2,6 @@ package com.spectrl.comix.collection.data.repository;
 
 import com.spectrl.comix.collection.data.BudgetPredicate;
 import com.spectrl.comix.collection.data.model.Comic;
-import com.spectrl.comix.collection.data.repository.source.RetrofitNetworkSource;
 
 import java.math.BigDecimal;
 import java.util.Collections;

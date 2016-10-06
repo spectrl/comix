@@ -2,7 +2,7 @@ package com.spectrl.comix.di;
 
 import com.spectrl.comix.collection.data.repository.ComicStore;
 import com.spectrl.comix.collection.data.repository.ComicsRepository;
-import com.spectrl.comix.collection.data.repository.source.RetrofitNetworkSource;
+import com.spectrl.comix.collection.data.repository.RetrofitNetworkSource;
 
 import javax.inject.Singleton;
 

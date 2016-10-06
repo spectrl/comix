@@ -1,4 +1,4 @@
-package com.spectrl.comix.collection.data.repository.source;
+package com.spectrl.comix.collection.data.repository;
 
 import com.spectrl.comix.api.MarvelService;
 import com.spectrl.comix.collection.data.model.Comic;
