@@ -8,6 +8,8 @@ import javax.inject.Singleton;
 
 import rx.Observable;
 
+import static com.spectrl.comix.collection.data.model.Comics.*;
+
 /**
  * Created by Kavi @ SPECTRL Ltd. on 06/10/2016.
  */
@@ -24,8 +26,9 @@ public class RetrofitNetworkSource {
 
     public Observable<Comics> getComics(int limit) {
         return marvelService.getComics(limit)
-                .map(marvelApiResponse -> Comics.builder()
+                .map(marvelApiResponse -> builder()
                         .comicList(marvelApiResponse.data().results())
+                        .source(Source.NETWORK)
                         .build());
     }
 }

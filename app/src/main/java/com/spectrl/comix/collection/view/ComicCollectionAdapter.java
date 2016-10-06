@@ -10,6 +10,7 @@ import com.spectrl.comix.collection.data.model.Comics;
 
 import java.util.Collections;
 
+import static com.spectrl.comix.collection.data.model.Comics.*;
 import static com.spectrl.comix.collection.view.CollectionContract.CollectionInteractionListener;
 
 /**
@@ -18,8 +19,9 @@ import static com.spectrl.comix.collection.view.CollectionContract.CollectionInt
 
 public class ComicCollectionAdapter extends RecyclerView.Adapter<ComicViewHolder> {
 
-    private Comics comics = Comics.builder()
+    private Comics comics = builder()
             .comicList(Collections.emptyList())
+            .source(Source.MEMORY)
             .build();
 
     private CollectionInteractionListener interactionListener;

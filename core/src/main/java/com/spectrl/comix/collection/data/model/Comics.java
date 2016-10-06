@@ -16,8 +16,15 @@ import java.util.List;
 @AutoValue
 public abstract class Comics {
 
+    public enum Source {
+        NETWORK,
+        DISK,
+        MEMORY
+    }
+
     public abstract List<Comic> comicList();
     abstract long timestamp();
+    abstract Source source();
 
     public static Builder builder() {
         return new AutoValue_Comics.Builder()
@@ -27,7 +34,8 @@ public abstract class Comics {
     @AutoValue.Builder
     public abstract static class Builder {
         public abstract Builder comicList(List<Comic> comics);
-        public abstract Builder timestamp(long timestamp);
+        abstract Builder timestamp(long timestamp);
+        public abstract Builder source(Source source);
         public abstract Comics build();
     }
 

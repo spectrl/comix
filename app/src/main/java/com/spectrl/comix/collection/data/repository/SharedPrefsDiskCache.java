@@ -10,6 +10,8 @@ import com.squareup.moshi.Moshi;
 import rx.Completable;
 import rx.Observable;
 
+import static com.spectrl.comix.collection.data.model.Comics.*;
+
 /**
  * Created by Kavi @ SPECTRL Ltd. on 06/10/2016.
  */
@@ -37,7 +39,10 @@ public class SharedPrefsDiskCache implements DiskCache<String, Comics> {
     public Observable<Comics> get(String key) {
         return Observable.fromCallable(() -> {
             String json = sharedPrefs.getString(key, "");
-            return TextUtils.isEmpty(json) ? null : jsonAdapter.fromJson(json);
+            return TextUtils.isEmpty(json) ? null : jsonAdapter.fromJson(json)
+                    .toBuilder()
+                    .source(Source.DISK)
+                    .build();
         });
     }
 }
