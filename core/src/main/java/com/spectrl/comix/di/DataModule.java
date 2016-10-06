@@ -5,6 +5,7 @@ import com.spectrl.comix.collection.data.repository.ComicStore;
 import com.spectrl.comix.collection.data.repository.ComicsRepository;
 import com.spectrl.comix.collection.data.repository.DiskCache;
 import com.spectrl.comix.collection.data.repository.RetrofitNetworkSource;
+import com.spectrl.comix.util.Connectivity;
 
 import javax.inject.Singleton;
 
@@ -21,7 +22,8 @@ public class DataModule {
     @Provides
     @Singleton
     ComicsRepository provideComicsRepository(RetrofitNetworkSource networkSource,
-                                             DiskCache<String, Comics> diskCache) {
-        return new ComicStore(networkSource, diskCache);
+                                             DiskCache<String, Comics> diskCache,
+                                             Connectivity connectivity) {
+        return new ComicStore(networkSource, diskCache, connectivity);
     }
 }

@@ -3,6 +3,7 @@ package com.spectrl.comix.collection.data.repository;
 import com.spectrl.comix.collection.data.BudgetPredicate;
 import com.spectrl.comix.collection.data.model.Comic;
 import com.spectrl.comix.collection.data.model.Comics;
+import com.spectrl.comix.util.Connectivity;
 
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
@@ -22,14 +23,17 @@ public class ComicStore implements ComicsRepository {
 
     private static final int DEFAULT_LIMIT = 100;
     private static final String COMIC_CACHE_KEY = "key_comics_list";
+    private static final int CACHE_MAX_AGE = 60;
     private static final long CACHE_MAX_STALE = TimeUnit.SECONDS.convert(24, TimeUnit.HOURS);
 
     private final RetrofitNetworkSource networkSource;
     private final DiskCache<String, Comics> diskCache;
+    private final Connectivity connectivity;
 
-    public ComicStore(RetrofitNetworkSource networkSource, DiskCache<String, Comics> diskCache) {
+    public ComicStore(RetrofitNetworkSource networkSource, DiskCache<String, Comics> diskCache, Connectivity connectivity) {
         this.networkSource = networkSource;
         this.diskCache = diskCache;
+        this.connectivity = connectivity;
     }
 
     @Override
@@ -41,11 +45,12 @@ public class ComicStore implements ComicsRepository {
                 diskCache.get(COMIC_CACHE_KEY).subscribeOn(Schedulers.io()))
                 .onErrorReturn(throwable -> {
                     LOGGER.log(Level.SEVERE, throwable.getMessage(), throwable);
-                    Exceptions.propagate(throwable);
                     return null;
                 })
-                .filter(comics -> comics != null // e.g. Ignore empty cache or error
-                        && comics.isFresh(CACHE_MAX_STALE)) // Only emit data newer than max stale
+                .filter(comics -> comics != null) // e.g. Ignore empty cache or error
+                .first(comics -> connectivity.connected()
+                        ? comics.isFresh(CACHE_MAX_AGE)
+                        : comics.isFresh(CACHE_MAX_STALE))
                 .share();
     }
 
