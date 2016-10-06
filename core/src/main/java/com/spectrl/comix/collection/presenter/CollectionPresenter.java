@@ -71,6 +71,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
                     getView().setProgressIndicator(false);
                     getView().displayComics(comics);
                 }, throwable -> {
+                    LOGGER.log(Level.SEVERE, throwable.getMessage(), throwable);
                     if (!hasView()) { return; }
                     getView().setProgressIndicator(false);
                     // TODO: 02/10/2016 Display error
@@ -92,16 +93,15 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
             case CLOSE:
                 if (!hasView()) { return; }
                 getView().setRefreshEnabled(true);
+                if (getView().isShowingBudgetInfo()) {
+                    getView().showBudgetInfo(false);
+                }
                 break;
             case UPDATE:
                 findComics(budget.amount());
                 break;
             case CLEAR:
-                refreshComics(false);
-                if (!hasView()) { return; }
-                if (getView().isShowingBudgetInfo()) {
-                    getView().showBudgetInfo(false);
-                }
+                findComics(BigDecimal.valueOf(Float.MAX_VALUE));
                 break;
         }
     }

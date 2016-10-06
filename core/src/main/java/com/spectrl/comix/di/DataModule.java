@@ -1,8 +1,12 @@
 package com.spectrl.comix.di;
 
-import com.spectrl.comix.api.MarvelService;
+import com.spectrl.comix.collection.data.model.Comic;
 import com.spectrl.comix.collection.data.repository.ComicStore;
 import com.spectrl.comix.collection.data.repository.ComicsRepository;
+import com.spectrl.comix.collection.data.repository.DiskCache;
+import com.spectrl.comix.collection.data.repository.RetrofitNetworkSource;
+
+import java.util.List;
 
 import javax.inject.Singleton;
 
@@ -18,7 +22,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    ComicsRepository provideComicsRepository(MarvelService marvelService) {
-        return new ComicStore(marvelService);
+    ComicsRepository provideComicsRepository(RetrofitNetworkSource networkSource,
+                                             DiskCache<String, List<Comic>> diskCache) {
+        return new ComicStore(networkSource, diskCache);
     }
 }

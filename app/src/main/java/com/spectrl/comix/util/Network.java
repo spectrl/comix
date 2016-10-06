@@ -8,11 +8,11 @@ import android.net.NetworkInfo;
  * Created by Kavi @ SPECTRL Ltd. on 06/10/2016.
  */
 
-public class Connectivity implements Connection {
+public class Network implements Connectivity {
 
     private final Context context;
 
-    public Connectivity(Context context) {
+    public Network(Context context) {
         this.context = context;
     }
 

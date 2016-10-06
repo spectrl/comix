@@ -1,12 +1,13 @@
 package com.spectrl.comix.collection.data.repository;
 
-import com.spectrl.comix.api.MarvelService;
 import com.spectrl.comix.collection.data.BudgetPredicate;
 import com.spectrl.comix.collection.data.model.Comic;
 
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import rx.Observable;
 import rx.functions.Func1;
@@ -17,26 +18,39 @@ import rx.schedulers.Schedulers;
  */
 
 public class ComicStore implements ComicsRepository {
+    private final static Logger LOGGER = Logger.getLogger(ComicStore.class.getName());
+
     private static final int DEFAULT_LIMIT = 100;
+    private static final String COMIC_CACHE_KEY = "key_comics_list";
 
-    // This could be split into separate interfaces per feature for larger applications
-    private final MarvelService marvelService;
+    private final RetrofitNetworkSource networkSource;
+    private final DiskCache<String, List<Comic>> diskCache;
 
-    public ComicStore(MarvelService marvelService) {
-        this.marvelService = marvelService;
+    public ComicStore(RetrofitNetworkSource networkSource, DiskCache<String, List<Comic>> diskCache) {
+        this.networkSource = networkSource;
+        this.diskCache = diskCache;
     }
 
     @Override
     public Observable<List<Comic>> fetchComics(int limit) {
-        return marvelService.getComics(limit)
-                .subscribeOn(Schedulers.io())
-                .map(marvelApiResponse -> marvelApiResponse.data().results());
+        return Observable.merge(
+                networkSource.getComics(limit)
+                        .doOnNext(comics -> diskCache.put(COMIC_CACHE_KEY, comics).subscribe())
+                        .subscribeOn(Schedulers.io()),
+                diskCache.get(COMIC_CACHE_KEY).subscribeOn(Schedulers.io()))
+                .onErrorReturn(throwable -> {
+                    LOGGER.log(Level.SEVERE, throwable.getMessage(), throwable);
+                    return null;
+                })
+                .filter(comics -> comics != null) // e.g. Ignore empty cache or error
+                .share();
     }
 
     @Override
     public Observable<List<Comic>> comicsInBudget(BigDecimal budget) {
         final BigDecimal[] remainingBudget = {budget};
         return fetchComics(DEFAULT_LIMIT)
+                .first()
                 .observeOn(Schedulers.computation())
                 .map(comics -> {
                     Collections.sort(comics, Comic.byPrice());

@@ -22,6 +22,7 @@ public class ComicCollectionAdapter extends RecyclerView.Adapter<ComicViewHolder
 
     private CollectionInteractionListener interactionListener;
 
+    // TODO: 06/10/2016 Use DiffUtil
     public void update(List<Comic> comics){
         this.comics = comics;
         notifyDataSetChanged();
