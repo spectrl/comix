@@ -19,13 +19,16 @@ public abstract class Comic {
     public abstract int id();
     public abstract String title();
     public abstract double issueNumber();
+    public abstract String description();
     public abstract int pageCount();
     public abstract Image thumbnail();
     public abstract List<Price> prices();
     public abstract List<Image> images();
+    public abstract Creators creators();
 
-    public static Comic create(int id, String title, double issueNumber, int pageCount, Image thumbnail, List<Price> prices, List<Image> images) {
-        return new AutoValue_Comic(id, title, issueNumber, pageCount, thumbnail, prices, images);
+    public static Comic create(int id, String title, double issueNumber, String description,
+                               int pageCount, Image thumbnail, List<Price> prices, List<Image> images, Creators creators) {
+        return new AutoValue_Comic(id, title, issueNumber, description, pageCount, thumbnail, prices, images, creators);
     }
 
     public static JsonAdapter<Comic> jsonAdapter(Moshi moshi) {
@@ -76,6 +79,34 @@ public abstract class Comic {
 
         public static JsonAdapter<Image> jsonAdapter(Moshi moshi) {
             return new AutoValue_Comic_Image.MoshiJsonAdapter(moshi);
+        }
+    }
+
+    @AutoValue
+    public static abstract class Creators {
+        public abstract List<CreatorSummary> items();
+
+        public static Creators create(List<CreatorSummary> items) {
+            return new AutoValue_Comic_Creators(items);
+        }
+
+        public static JsonAdapter<Creators> jsonAdapter(Moshi moshi) {
+            return new AutoValue_Comic_Creators.MoshiJsonAdapter(moshi);
+        }
+
+        @AutoValue
+        public static abstract class CreatorSummary {
+            public abstract String resourceURI();
+            public abstract String name();
+            public abstract String role();
+
+            public static CreatorSummary create(String resourceURI, String name, String role) {
+                return new AutoValue_Comic_Creators_CreatorSummary(resourceURI, name, role);
+            }
+
+            public static JsonAdapter<CreatorSummary> jsonAdapter(Moshi moshi) {
+                return new AutoValue_Comic_Creators_CreatorSummary.MoshiJsonAdapter(moshi);
+            }
         }
     }
 }
