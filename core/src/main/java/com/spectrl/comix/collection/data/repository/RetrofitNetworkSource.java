@@ -1,9 +1,7 @@
 package com.spectrl.comix.collection.data.repository;
 
 import com.spectrl.comix.api.MarvelService;
-import com.spectrl.comix.collection.data.model.Comic;
-
-import java.util.List;
+import com.spectrl.comix.collection.data.model.Comics;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -24,8 +22,10 @@ public class RetrofitNetworkSource {
         this.marvelService = marvelService;
     }
 
-    public Observable<List<Comic>> getComics(int limit) {
+    public Observable<Comics> getComics(int limit) {
         return marvelService.getComics(limit)
-                .map(marvelApiResponse -> marvelApiResponse.data().results());
+                .map(marvelApiResponse -> Comics.builder()
+                        .comicList(marvelApiResponse.data().results())
+                        .build());
     }
 }

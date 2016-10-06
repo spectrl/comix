@@ -1,10 +1,9 @@
 package com.spectrl.comix.collection.view;
 
 import com.spectrl.comix.collection.data.model.Comic;
+import com.spectrl.comix.collection.data.model.Comics;
 import com.spectrl.comix.collection.view.model.Budget;
 import com.spectrl.comix.view.View;
-
-import java.util.List;
 
 /**
  * Created by Kavi @ SPECTRL Ltd. on 07/07/2016.
@@ -14,7 +13,7 @@ public interface CollectionContract {
 
     interface CollectionView extends View<CollectionInteractionListener> {
 
-        void displayComics(List<Comic> comics);
+        void displayComics(Comics comics);
 
         void setProgressIndicator(boolean active);
 

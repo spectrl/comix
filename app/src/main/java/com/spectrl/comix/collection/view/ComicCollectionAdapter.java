@@ -6,9 +6,9 @@ import android.view.ViewGroup;
 
 import com.spectrl.comix.R;
 import com.spectrl.comix.collection.data.model.Comic;
+import com.spectrl.comix.collection.data.model.Comics;
 
 import java.util.Collections;
-import java.util.List;
 
 import static com.spectrl.comix.collection.view.CollectionContract.CollectionInteractionListener;
 
@@ -18,12 +18,14 @@ import static com.spectrl.comix.collection.view.CollectionContract.CollectionInt
 
 public class ComicCollectionAdapter extends RecyclerView.Adapter<ComicViewHolder> {
 
-    private List<Comic> comics = Collections.emptyList();
+    private Comics comics = Comics.builder()
+            .comicList(Collections.emptyList())
+            .build();
 
     private CollectionInteractionListener interactionListener;
 
     // TODO: 06/10/2016 Use DiffUtil
-    public void update(List<Comic> comics){
+    public void update(Comics comics){
         this.comics = comics;
         notifyDataSetChanged();
     }
@@ -36,7 +38,7 @@ public class ComicCollectionAdapter extends RecyclerView.Adapter<ComicViewHolder
 
     @Override
     public void onBindViewHolder(ComicViewHolder holder, int position) {
-        holder.bindTo(comics.get(position), selectionListener);
+        holder.bindTo(comics.getComicAt(position), selectionListener);
     }
 
     @Override
@@ -46,7 +48,7 @@ public class ComicCollectionAdapter extends RecyclerView.Adapter<ComicViewHolder
 
     @Override
     public long getItemId(int position) {
-        return comics.get(position).id();
+        return comics.getComicAt(position).id();
     }
 
     public void setInteractionListener(CollectionInteractionListener interactionListener) {
