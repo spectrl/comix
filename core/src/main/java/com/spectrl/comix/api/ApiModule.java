@@ -2,7 +2,7 @@ package com.spectrl.comix.api;
 
 import com.spectrl.comix.di.CacheInterceptor;
 import com.spectrl.comix.di.OfflineCacheInterceptor;
-import com.spectrl.comix.util.Connection;
+import com.spectrl.comix.util.Connectivity;
 import com.squareup.moshi.Moshi;
 
 import java.io.File;
@@ -74,10 +74,10 @@ public class ApiModule {
     }
 
     @Provides @Singleton @OfflineCacheInterceptor
-    Interceptor provideOfflineCacheInterceptor(Connection connection) {
+    Interceptor provideOfflineCacheInterceptor(Connectivity connectivity) {
         return chain -> {
             Request originalRequest = chain.request();
-            if (!connection.connected()) {
+            if (!connectivity.connected()) {
                 CacheControl cacheControl = new CacheControl.Builder()
                         .maxStale(24, TimeUnit.HOURS)
                         .build();
