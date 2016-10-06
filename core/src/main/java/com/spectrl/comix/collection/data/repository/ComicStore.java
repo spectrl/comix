@@ -41,6 +41,7 @@ public class ComicStore implements ComicsRepository {
                 diskCache.get(COMIC_CACHE_KEY).subscribeOn(Schedulers.io()))
                 .onErrorReturn(throwable -> {
                     LOGGER.log(Level.SEVERE, throwable.getMessage(), throwable);
+                    Exceptions.propagate(throwable);
                     return null;
                 })
                 .filter(comics -> comics != null // e.g. Ignore empty cache or error
