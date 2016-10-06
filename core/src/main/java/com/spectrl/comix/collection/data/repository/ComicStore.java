@@ -42,13 +42,15 @@ public class ComicStore implements ComicsRepository {
                     LOGGER.log(Level.SEVERE, throwable.getMessage(), throwable);
                     return null;
                 })
-                .filter(comics -> comics != null); // e.g. Ignore empty cache or error
+                .filter(comics -> comics != null) // e.g. Ignore empty cache or error
+                .share();
     }
 
     @Override
     public Observable<List<Comic>> comicsInBudget(BigDecimal budget) {
         final BigDecimal[] remainingBudget = {budget};
         return fetchComics(DEFAULT_LIMIT)
+                .first()
                 .observeOn(Schedulers.computation())
                 .map(comics -> {
                     Collections.sort(comics, Comic.byPrice());
