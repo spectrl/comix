@@ -11,10 +11,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import rx.Observable;
+import rx.Single;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-import static com.spectrl.comix.collection.data.model.Comics.*;
+import static com.spectrl.comix.collection.data.model.Comics.Source;
+import static com.spectrl.comix.collection.data.model.Comics.builder;
 
 /**
  * Created by Kavi @ SPECTRL Ltd. on 22/09/2016.
@@ -76,5 +78,20 @@ public class ComicStore implements ComicsRepository {
                         .comicList(comics)
                         .source(Source.MEMORY)
                         .build());
+    }
+
+    @Override
+    public Single<Comic> browseComic(int id) {
+        return diskCache.get(COMIC_CACHE_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.computation())
+                .flatMap(new Func1<Comics, Observable<Comic>>() {
+                    @Override
+                    public Observable<Comic> call(Comics comics) {
+                        return Observable.from(comics.comicList());
+                    }
+                })
+                .takeFirst(comic -> comic.id() == id)
+                .toSingle();
     }
 }
