@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 
 class ComicViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.comic_view) ComicView comicView;
+    @BindView(R.id.comic_book_view) ComicBookView comicBookView;
 
     ComicViewHolder(View itemView) {
         super(itemView);
@@ -23,8 +23,8 @@ class ComicViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bindTo(final Comic comic, final ComicSelectionListener listener) {
-        comicView.setCover(comic.thumbnail().imageUrl());
-        comicView.setTitle(comic.title());
+        comicBookView.setCover(comic.thumbnail().imageUrl());
+        comicBookView.setTitle(comic.title());
         itemView.setOnClickListener(view -> listener.onComicSelected(comic));
     }
 
