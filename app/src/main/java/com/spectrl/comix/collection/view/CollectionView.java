@@ -13,9 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.spectrl.comix.R;
-import com.spectrl.comix.collection.data.model.Comic;
-
-import java.util.List;
+import com.spectrl.comix.collection.data.model.Comics;
 
 import butterknife.BindDimen;
 import butterknife.BindInt;
@@ -71,7 +69,7 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     }
 
     @Override
-    public void displayComics(List<Comic> comics) {
+    public void displayComics(Comics comics) {
         collectionAdapter.update(comics);
     }
 

@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import com.spectrl.comix.BuildConfig;
 import com.spectrl.comix.api.MarvelAuthorizationInterceptor;
-import com.spectrl.comix.collection.data.model.Comic;
+import com.spectrl.comix.collection.data.model.Comics;
 import com.spectrl.comix.collection.data.repository.DiskCache;
 import com.spectrl.comix.collection.data.repository.SharedPrefsDiskCache;
 import com.spectrl.comix.di.MainThread;
@@ -14,7 +14,6 @@ import com.spectrl.comix.util.Network;
 import com.squareup.moshi.Moshi;
 
 import java.io.File;
-import java.util.List;
 
 import javax.inject.Singleton;
 
@@ -68,7 +67,7 @@ public class ApplicationModule {
     }
 
     @Provides @Singleton
-    DiskCache<String, List<Comic>> provideComicsDiskCache(SharedPreferences sharedPreferences, Moshi moshi) {
+    DiskCache<String, Comics> provideComicsDiskCache(SharedPreferences sharedPreferences, Moshi moshi) {
         return new SharedPrefsDiskCache(sharedPreferences, moshi);
     }
 

@@ -1,13 +1,13 @@
 package com.spectrl.comix.collection.presenter;
 
 import com.spectrl.comix.collection.data.model.Comic;
+import com.spectrl.comix.collection.data.model.Comics;
 import com.spectrl.comix.collection.data.repository.ComicsRepository;
 import com.spectrl.comix.collection.view.model.Budget;
 import com.spectrl.comix.di.MainThread;
 import com.spectrl.comix.presenter.BasePresenter;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -131,17 +131,17 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
         getView().showPageCount(totalPageCount);
     }
 
-    private int countPages(List<Comic> comics) {
+    private int countPages(Comics comics) {
         int pages = 0;
-        for (Comic comic : comics) {
+        for (Comic comic : comics.comicList()) {
             pages += comic.pageCount();
         }
         return pages;
     }
 
-    private String totalPrice(List<Comic> comics) {
+    private String totalPrice(Comics comics) {
         BigDecimal total = BigDecimal.ZERO;
-        for (Comic comic : comics) {
+        for (Comic comic : comics.comicList()) {
             total = total.add(BigDecimal.valueOf(comic.lowestPrice()));
         }
         return total.setScale(2, BigDecimal.ROUND_HALF_UP).toString();

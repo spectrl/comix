@@ -32,15 +32,6 @@ public abstract class Comic {
         return new AutoValue_Comic.MoshiJsonAdapter(moshi);
     }
 
-    public static Comparator<? super Comic> byPrice() {
-        return new Comparator<Comic>() {
-            @Override
-            public int compare(Comic o1, Comic o2) {
-                return Float.compare(o1.lowestPrice(), o2.lowestPrice());
-            }
-        };
-    }
-
     public float lowestPrice() {
         List<Price> sortedList = new ArrayList<>(prices());
         Collections.sort(sortedList, Price.byPrice());
