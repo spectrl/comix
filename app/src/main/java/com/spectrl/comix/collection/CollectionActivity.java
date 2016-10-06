@@ -59,7 +59,7 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
 
         budgetSubscription = RxTextView.textChangeEvents(budget)
                 .skip(1) // Skip initial emmision on subscribe
-                .debounce(400, TimeUnit.MILLISECONDS)
+                .debounce(300, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(changes -> TextUtils.isEmpty(changes.text())
                         ? BigDecimal.valueOf(-1)
@@ -102,7 +102,6 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
             if (isVisible) {
                 item.setIcon(R.drawable.ic_local_atm_white_24dp);
                 budget.setVisibility(View.GONE);
-                budget.setText("");
                 View view = getCurrentFocus();
                 if (view != null) {
                     InputMethodManager imm =
@@ -117,6 +116,7 @@ public class CollectionActivity extends BaseActivity<ActivityComponent> {
                 InputMethodManager imm =
                         (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(budget, InputMethodManager.SHOW_IMPLICIT);
+                budget.setText("");
                 collectionPresenter.onBudget(Budget.create(Action.OPEN));
             }
             return true;

@@ -93,16 +93,15 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
             case CLOSE:
                 if (!hasView()) { return; }
                 getView().setRefreshEnabled(true);
+                if (getView().isShowingBudgetInfo()) {
+                    getView().showBudgetInfo(false);
+                }
                 break;
             case UPDATE:
                 findComics(budget.amount());
                 break;
             case CLEAR:
-                refreshComics(false);
-                if (!hasView()) { return; }
-                if (getView().isShowingBudgetInfo()) {
-                    getView().showBudgetInfo(false);
-                }
+                findComics(BigDecimal.valueOf(Float.MAX_VALUE));
                 break;
         }
     }
