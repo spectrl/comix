@@ -13,4 +13,5 @@
     <string name="price">%s</string>
     <string name="bookmark">Bookmark</string>
     <string name="creators">Creators</string>
+    <string name="empty">No comics found...</string>
 </resources>

@@ -38,12 +38,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/comics_recyclerview"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/grid_spacing"
-            android:clipToPadding="false"/>
+            android:layout_height="match_parent">
+
+            <com.spectrl.comix.collection.view.ComixRecyclerView
+                android:id="@+id/comix_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/grid_spacing"
+                android:clipToPadding="false"/>
+
+            <TextView
+                android:id="@+id/empty_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/empty"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                android:drawableTop="@drawable/ic_layers_clear_black_24dp"
+                android:drawablePadding="8dp"
+                android:layout_marginBottom="8dp"/>
+
+        </FrameLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
