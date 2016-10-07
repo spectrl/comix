@@ -23,8 +23,8 @@ public abstract class Comics {
     }
 
     public abstract List<Comic> comicList();
-    abstract long timestamp();
-    abstract Source source();
+    public abstract long timestamp();
+    public abstract Source source();
 
     public static Builder builder() {
         return new AutoValue_Comics.Builder()
