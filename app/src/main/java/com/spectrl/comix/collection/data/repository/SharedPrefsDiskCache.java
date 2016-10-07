@@ -1,7 +1,6 @@
 package com.spectrl.comix.collection.data.repository;
 
 import android.content.SharedPreferences;
-import android.text.TextUtils;
 
 import com.spectrl.comix.collection.data.model.Comics;
 import com.squareup.moshi.JsonAdapter;
@@ -10,7 +9,7 @@ import com.squareup.moshi.Moshi;
 import rx.Completable;
 import rx.Observable;
 
-import static com.spectrl.comix.collection.data.model.Comics.*;
+import static com.spectrl.comix.collection.data.model.Comics.Source;
 
 /**
  * Created by Kavi @ SPECTRL Ltd. on 06/10/2016.
