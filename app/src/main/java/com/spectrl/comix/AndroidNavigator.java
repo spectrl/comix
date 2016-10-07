@@ -19,6 +19,6 @@ public class AndroidNavigator implements Navigator {
 
     @Override
     public void openComic(int id) {
-        activity.startActivity(ComicActivity.createIntent(activity));
+        activity.startActivity(ComicActivity.createIntent(activity, id));
     }
 }

@@ -3,6 +3,7 @@ package com.spectrl.comix.di.activity;
 import android.app.Activity;
 
 import com.spectrl.comix.AndroidNavigator;
+import com.spectrl.comix.di.ActivityScope;
 import com.spectrl.comix.view.Navigator;
 
 import dagger.Module;

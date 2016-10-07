@@ -1,4 +1,4 @@
-package com.spectrl.comix.di.activity;
+package com.spectrl.comix.di;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

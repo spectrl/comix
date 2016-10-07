@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.spectrl.comix.comic.ComicView
-        android:id="@+id/collection_view"
+    <com.spectrl.comix.comic.view.ComicView
+        android:id="@+id/comic_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
