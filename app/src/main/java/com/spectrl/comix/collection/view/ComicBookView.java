@@ -17,13 +17,13 @@ import butterknife.ButterKnife;
  * Created by Kavi @ SPECTRL Ltd. on 05/10/2016.
  */
 
-public class ComicView extends FrameLayout {
+public class ComicBookView extends FrameLayout {
     private static final float ASPECT_RATIO = 1.5f;
 
     @BindView(R.id.thumbnail) ImageView thumbnail;
     @BindView(R.id.title) TextView title;
 
-    public ComicView(Context context, AttributeSet attrs) {
+    public ComicBookView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -39,7 +39,7 @@ public class ComicView extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        View.inflate(getContext(), R.layout.merge_comic_view, this);
+        View.inflate(getContext(), R.layout.merge_comic_book_view, this);
         ButterKnife.bind(this);
     }
 

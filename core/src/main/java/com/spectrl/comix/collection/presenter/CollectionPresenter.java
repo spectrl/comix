@@ -4,8 +4,10 @@ import com.spectrl.comix.collection.data.model.Comic;
 import com.spectrl.comix.collection.data.model.Comics;
 import com.spectrl.comix.collection.data.repository.ComicsRepository;
 import com.spectrl.comix.collection.view.model.Budget;
+import com.spectrl.comix.di.ActivityScope;
 import com.spectrl.comix.di.MainThread;
 import com.spectrl.comix.presenter.BasePresenter;
+import com.spectrl.comix.view.Navigator;
 
 import java.math.BigDecimal;
 import java.util.Locale;
@@ -25,6 +27,7 @@ import static com.spectrl.comix.collection.view.CollectionContract.CollectionVie
  * Created by Kavi @ SPECTRL Ltd. on 22/09/2016.
  */
 
+@ActivityScope
 public class CollectionPresenter extends BasePresenter<CollectionView> implements CollectionInteractionListener {
     private final static Logger LOGGER = Logger.getLogger(CollectionPresenter.class.getName());
 
@@ -34,6 +37,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
 
     @Inject @MainThread
     Scheduler mainThread;
+    @Inject Navigator navigator;
 
     private final ComicsRepository comicsRepository;
 
@@ -80,7 +84,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
 
     @Override
     public void onComicChosen(Comic comic) {
-        // TODO: 22/09/2016 Open Comic details Activity using Navigator
+        navigator.openComic(comic.id());
     }
 
     @Override

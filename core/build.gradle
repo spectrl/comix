@@ -37,6 +37,8 @@ dependencies {
 
     compile libs.rxJava
 
+    compileOnly libs.jsr305
+
     testCompile libs.junit
     testCompile libs.mockito
     testCompile libs.truth
