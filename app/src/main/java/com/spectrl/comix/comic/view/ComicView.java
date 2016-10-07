@@ -48,6 +48,7 @@ public class ComicView extends LinearLayout implements ComicContract.ComicView {
 
     @Override
     public void setCover(String coverUrl) {
+        // TODO: 07/10/2016 Placeholder
         Glide.with(getContext())
                 .load(coverUrl)
                 .crossFade()
@@ -61,12 +62,12 @@ public class ComicView extends LinearLayout implements ComicContract.ComicView {
 
     @Override
     public void setPageCount(String pageCount) {
-        this.pageCount.setText(pageCount);
+        this.pageCount.setText(getContext().getString(R.string.pages, pageCount));
     }
 
     @Override
     public void setPrice(String price) {
-        this.price.setText(price);
+        this.price.setText(getContext().getString(R.string.price, price));
     }
 
     @Override

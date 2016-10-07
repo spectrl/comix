@@ -9,4 +9,6 @@
     <string name="budget_total_price">Total price: %s</string>
 
     <string name="cover">Cover</string>
+    <string name="pages">%s pages</string>
+    <string name="price">%s</string>
 </resources>

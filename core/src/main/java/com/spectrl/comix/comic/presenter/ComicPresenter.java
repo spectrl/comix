@@ -5,8 +5,6 @@ import com.spectrl.comix.collection.data.repository.ComicsRepository;
 import com.spectrl.comix.di.MainThread;
 import com.spectrl.comix.presenter.BasePresenter;
 
-import java.util.Arrays;
-
 import rx.Scheduler;
 import rx.Subscription;
 import rx.schedulers.Schedulers;
@@ -50,7 +48,7 @@ public class ComicPresenter extends BasePresenter<ComicView> implements ComicInt
         getView().setCover(comic.thumbnail().imageUrl());
         getView().setTitle(comic.title());
         getView().setPageCount(String.valueOf(comic.pageCount()));
-        getView().setPrice(Arrays.toString(comic.prices().toArray()));
+        getView().setPrice(String.valueOf(comic.lowestPrice()));
         getView().setDescription(comic.description());
     }
 }
