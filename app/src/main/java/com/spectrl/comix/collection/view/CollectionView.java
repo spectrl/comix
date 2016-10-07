@@ -5,7 +5,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,7 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     @BindView(R.id.budget_comic_count) TextView budgetComicCount;
     @BindView(R.id.budget_comic_price) TextView budgetComicPrice;
     @BindView(R.id.swipe_layout) SwipeRefreshLayout swipeLayout;
-    @BindView(R.id.comics_recyclerview) RecyclerView comicsRecyclerView;
+    @BindView(R.id.comix_recyclerview) ComixRecyclerView comixRecyclerView;
 
     @BindInt(R.integer.num_columns) int columns;
     @BindDimen(R.dimen.grid_spacing) int gridPadding;
@@ -58,9 +57,9 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
         View.inflate(getContext(), R.layout.collection_view, this);
         unbinder = ButterKnife.bind(this);
 
-        comicsRecyclerView.setAdapter(collectionAdapter);
-        comicsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), columns));
-        comicsRecyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.grid_spacing));
+        comixRecyclerView.setAdapter(collectionAdapter);
+        comixRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), columns));
+        comixRecyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.grid_spacing));
     }
 
     @Override
@@ -135,10 +134,10 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     }
 
     private void setRecyclerViewBottomPadding(int bottomPadding) {
-        comicsRecyclerView.setPadding(
-                comicsRecyclerView.getPaddingLeft(),
-                comicsRecyclerView.getPaddingTop(),
-                comicsRecyclerView.getPaddingRight(),
+        comixRecyclerView.setPadding(
+                comixRecyclerView.getPaddingLeft(),
+                comixRecyclerView.getPaddingTop(),
+                comixRecyclerView.getPaddingRight(),
                 bottomPadding);
     }
 }
