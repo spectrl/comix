@@ -14,8 +14,6 @@ public interface ComicContract {
 
         void setTitle(String title);
 
-        void setIssueNumber(String issueNumber);
-
         void setPageCount(String pageCount);
 
         void setPrice(String price);

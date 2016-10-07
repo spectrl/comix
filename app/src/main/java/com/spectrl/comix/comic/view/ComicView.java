@@ -22,7 +22,6 @@ public class ComicView extends LinearLayout implements ComicContract.ComicView {
 
     @BindView(R.id.cover) ImageView cover;
     @BindView(R.id.title) TextView title;
-    @BindView(R.id.issue_number) TextView issueNumber;
     @BindView(R.id.page_count) TextView pageCount;
     @BindView(R.id.price) TextView price;
     @BindView(R.id.description) TextView description;
@@ -58,11 +57,6 @@ public class ComicView extends LinearLayout implements ComicContract.ComicView {
     @Override
     public void setTitle(String title) {
         this.title.setText(title);
-    }
-
-    @Override
-    public void setIssueNumber(String issueNumber) {
-        this.issueNumber.setText(issueNumber);
     }
 
     @Override

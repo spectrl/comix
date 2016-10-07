@@ -6,7 +6,6 @@ import com.spectrl.comix.di.MainThread;
 import com.spectrl.comix.presenter.BasePresenter;
 
 import java.util.Arrays;
-import java.util.Locale;
 
 import rx.Scheduler;
 import rx.Subscription;
@@ -50,7 +49,6 @@ public class ComicPresenter extends BasePresenter<ComicView> implements ComicInt
         if (!hasView()) { return; }
         getView().setCover(comic.thumbnail().imageUrl());
         getView().setTitle(comic.title());
-        getView().setIssueNumber(String.format(Locale.ENGLISH, "#%f", comic.issueNumber()));
         getView().setPageCount(String.valueOf(comic.pageCount()));
         getView().setPrice(Arrays.toString(comic.prices().toArray()));
         getView().setDescription(comic.description());

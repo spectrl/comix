@@ -20,7 +20,6 @@ public abstract class Comic {
 
     public abstract int id();
     public abstract String title();
-    public abstract double issueNumber();
     @Nullable public abstract String description();
     public abstract int pageCount();
     public abstract Image thumbnail();
@@ -28,9 +27,9 @@ public abstract class Comic {
     public abstract List<Image> images();
     public abstract Creators creators();
 
-    public static Comic create(int id, String title, double issueNumber, String description,
+    public static Comic create(int id, String title, String description,
                                int pageCount, Image thumbnail, List<Price> prices, List<Image> images, Creators creators) {
-        return new AutoValue_Comic(id, title, issueNumber, description, pageCount, thumbnail, prices, images, creators);
+        return new AutoValue_Comic(id, title, description, pageCount, thumbnail, prices, images, creators);
     }
 
     public static JsonAdapter<Comic> jsonAdapter(Moshi moshi) {
