@@ -22,6 +22,7 @@ import rx.subscriptions.CompositeSubscription;
 
 import static com.spectrl.comix.collection.view.CollectionContract.CollectionInteractionListener;
 import static com.spectrl.comix.collection.view.CollectionContract.CollectionView;
+import static com.spectrl.comix.collection.view.model.Budget.*;
 
 /**
  * Created by Kavi @ SPECTRL Ltd. on 22/09/2016.
@@ -42,6 +43,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     private final ComicsRepository comicsRepository;
 
     private int totalPageCount;
+    private Action budgetAction = Action.CLOSE;
 
     @Inject
     public CollectionPresenter(ComicsRepository comicsRepository) {
@@ -51,7 +53,9 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     @Override
     public void enter() {
         getView().attach(this);
-        refreshComics(true);
+        if (budgetAction == Action.CLOSE) {
+            refreshComics(true);
+        }
     }
 
     @Override
@@ -89,6 +93,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
 
     @Override
     public void onBudget(Budget budget) {
+        this.budgetAction = budget.action();
         switch (budget.action()) {
             case OPEN:
                 if (!hasView()) { return; }
