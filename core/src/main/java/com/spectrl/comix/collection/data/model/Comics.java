@@ -34,7 +34,7 @@ public abstract class Comics {
     @AutoValue.Builder
     public abstract static class Builder {
         public abstract Builder comicList(List<Comic> comics);
-        abstract Builder timestamp(long timestamp);
+        public abstract Builder timestamp(long timestamp);
         public abstract Builder source(Source source);
         public abstract Comics build();
     }

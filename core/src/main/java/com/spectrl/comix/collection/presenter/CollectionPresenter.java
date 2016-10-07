@@ -38,16 +38,17 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
 
     @Inject @MainThread
     Scheduler mainThread;
-    @Inject Navigator navigator;
 
     private final ComicsRepository comicsRepository;
+    private final Navigator navigator;
 
-    private int totalPageCount;
+    int totalPageCount;
     private Action budgetAction = Action.CLOSE;
 
     @Inject
-    public CollectionPresenter(ComicsRepository comicsRepository) {
+    public CollectionPresenter(ComicsRepository comicsRepository, Navigator navigator) {
         this.comicsRepository = comicsRepository;
+        this.navigator = navigator;
     }
 
     @Override
