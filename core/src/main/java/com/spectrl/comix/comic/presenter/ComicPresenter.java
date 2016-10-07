@@ -64,4 +64,9 @@ public class ComicPresenter extends BasePresenter<ComicView> implements ComicInt
         }
         return creatorStrings;
     }
+
+    @Override
+    public void onBookmark() {
+        // TODO: 07/10/2016 Potential new feature...
+    }
 }

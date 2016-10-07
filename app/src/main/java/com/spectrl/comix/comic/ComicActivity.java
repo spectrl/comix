@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.spectrl.comix.BaseActivity;
 import com.spectrl.comix.R;
@@ -70,6 +72,16 @@ public class ComicActivity extends BaseActivity<ComicComponent> {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_comic, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_bookmark) {
+            comicPresenter.onBookmark();
+            Toast.makeText(this, "Coming soon...", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

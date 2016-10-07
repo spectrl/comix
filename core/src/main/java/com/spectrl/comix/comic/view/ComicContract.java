@@ -26,6 +26,7 @@ public interface ComicContract {
     }
 
     interface ComicInteractionListener extends View.InteractionListener {
-        // No interaction
+
+        void onBookmark();
     }
 }
