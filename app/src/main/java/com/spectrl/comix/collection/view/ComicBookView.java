@@ -39,7 +39,7 @@ public class ComicBookView extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        View.inflate(getContext(), R.layout.merge_comic_view, this);
+        View.inflate(getContext(), R.layout.merge_comic_book_view, this);
         ButterKnife.bind(this);
     }
 
