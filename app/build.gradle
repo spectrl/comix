@@ -79,6 +79,8 @@ dependencies {
     apt libs.butterknifeCompiler
 
     testCompile libs.junit
+    testCompile libs.mockito
+    testCompile libs.truth
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
