@@ -49,6 +49,7 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     public CollectionView(Context context, AttributeSet attrs) {
         super(context, attrs);
         collectionAdapter = new ComicCollectionAdapter();
+        collectionAdapter.hasStableIds();
     }
 
     @Override
