@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.spectrl.comix.R;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -25,6 +27,7 @@ public class ComicView extends LinearLayout implements ComicContract.ComicView {
     @BindView(R.id.page_count) TextView pageCount;
     @BindView(R.id.price) TextView price;
     @BindView(R.id.description) TextView description;
+    @BindView(R.id.creators) TextView creators;
 
     private Unbinder unbinder;
 
@@ -73,6 +76,16 @@ public class ComicView extends LinearLayout implements ComicContract.ComicView {
     @Override
     public void setDescription(String description) {
         this.description.setText(description);
+    }
+
+    @Override
+    public void setCreators(List<String> creators) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (String creator : creators) {
+            stringBuilder.append(creator);
+            stringBuilder.append("\n");
+        }
+        this.creators.setText(stringBuilder);
     }
 
     @Override

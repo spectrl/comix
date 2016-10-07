@@ -53,12 +53,22 @@
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lineSpacingMultiplier="1.5"
+        android:layout_marginBottom="24dp"
+        android:lineSpacingMultiplier="1.2"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <TextView
+        android:id="@+id/creators_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:text="@string/creators"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
 
     <TextView
         android:id="@+id/creators"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.5"/>
 
 </merge>

@@ -1,9 +1,13 @@
 package com.spectrl.comix.comic.presenter;
 
 import com.spectrl.comix.collection.data.model.Comic;
+import com.spectrl.comix.collection.data.model.Comic.Creators;
 import com.spectrl.comix.collection.data.repository.ComicsRepository;
 import com.spectrl.comix.di.MainThread;
 import com.spectrl.comix.presenter.BasePresenter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import rx.Scheduler;
 import rx.Subscription;
@@ -50,5 +54,14 @@ public class ComicPresenter extends BasePresenter<ComicView> implements ComicInt
         getView().setPageCount(String.valueOf(comic.pageCount()));
         getView().setPrice(String.valueOf(comic.lowestPrice()));
         getView().setDescription(comic.description());
+        getView().setCreators(buildCreatorList(comic.creators()));
+    }
+
+    private List<String> buildCreatorList(Creators creators) {
+        List<String> creatorStrings = new ArrayList<>(creators.items().size());
+        for (Creators.CreatorSummary summary : creators.items()) {
+            creatorStrings.add(String.format("%s – %s", summary.name(), summary.role()));
+        }
+        return creatorStrings;
     }
 }
