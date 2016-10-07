@@ -33,6 +33,7 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
     @BindView(R.id.budget_comic_count) TextView budgetComicCount;
     @BindView(R.id.budget_comic_price) TextView budgetComicPrice;
     @BindView(R.id.swipe_layout) SwipeRefreshLayout swipeLayout;
+    @BindView(R.id.empty_state) View emptyState;
     @BindView(R.id.comix_recyclerview) ComixRecyclerView comixRecyclerView;
 
     @BindInt(R.integer.num_columns) int columns;
@@ -57,6 +58,7 @@ public class CollectionView extends FrameLayout implements CollectionContract.Co
         View.inflate(getContext(), R.layout.collection_view, this);
         unbinder = ButterKnife.bind(this);
 
+        comixRecyclerView.setEmptyView(emptyState);
         comixRecyclerView.setAdapter(collectionAdapter);
         comixRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), columns));
         comixRecyclerView.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.grid_spacing));
