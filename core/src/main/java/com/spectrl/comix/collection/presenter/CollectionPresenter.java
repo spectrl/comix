@@ -62,6 +62,7 @@ public class CollectionPresenter extends BasePresenter<CollectionView> implement
     @Override
     public void exit() {
         getView().detach(this);
+        subscriptions.clear();
     }
 
     @Override
