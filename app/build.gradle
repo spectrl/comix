@@ -38,6 +38,21 @@ android {
         buildConfigField "String", "MARVEL_PRIVATE_KEY", "\"${props.marvel_private_key}\""
     }
 
+    def signingProperties = file("../signing.properties")
+
+    signingConfigs {
+        if (signingProperties.exists()) {
+            Properties props = new Properties()
+            props.load(new FileInputStream(signingProperties))
+            release {
+                storeFile file(props.storeFile)
+                storePassword props.storePass
+                keyAlias props.keyAlias
+                keyPassword props.keyPass
+            }
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
@@ -46,6 +61,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            if (signingProperties.exists()) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 
