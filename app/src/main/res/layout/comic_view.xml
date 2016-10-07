@@ -33,16 +33,16 @@
                 android:id="@+id/page_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_library_books_white_24dp"
-                android:drawableLeft="@drawable/ic_library_books_white_24dp"
+                android:drawableStart="@drawable/ic_library_books_accent_24dp"
+                android:drawableLeft="@drawable/ic_library_books_accent_24dp"
                 style="@style/Comic.Metadata" />
 
             <TextView
                 android:id="@+id/price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_local_atm_white_24dp"
-                android:drawableLeft="@drawable/ic_local_atm_white_24dp"
+                android:drawableStart="@drawable/ic_local_atm_accent_24dp"
+                android:drawableLeft="@drawable/ic_local_atm_accent_24dp"
                 style="@style/Comic.Metadata"/>
 
         </LinearLayout>
