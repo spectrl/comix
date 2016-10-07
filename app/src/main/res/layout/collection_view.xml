@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/collection_view_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/budget_info_height_adjustment"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/budget_info"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/budget_info_height"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:id="@+id/budget_comic_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_gravity="center_vertical|start"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"/>
+
+        <TextView
+            android:id="@+id/budget_comic_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:layout_gravity="center_vertical|end"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"/>
+
+    </FrameLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.spectrl.comix.collection.view.ComixRecyclerView
+                android:id="@+id/comix_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/grid_spacing"
+                android:clipToPadding="false"/>
+
+            <TextView
+                android:id="@+id/empty_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/empty"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                android:drawableTop="@drawable/ic_layers_clear_black_24dp"
+                android:drawablePadding="8dp"
+                android:layout_marginBottom="8dp"/>
+
+        </FrameLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

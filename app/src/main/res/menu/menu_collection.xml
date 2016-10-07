@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_budget"
+        android:icon="@drawable/ic_local_atm_white_24dp"
+        android:title="@string/budget"
+        app:showAsAction="always">
+    </item>
+    <item
+        android:id="@+id/action_page_count"
+        android:icon="@drawable/ic_library_books_white_24dp"
+        android:title="@string/page_count"
+        app:showAsAction="ifRoom">
+    </item>
+</menu>

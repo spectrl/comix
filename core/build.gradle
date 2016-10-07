@@ -1,0 +1,48 @@
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        def plugin = rootProject.ext.gradlePlugins
+
+        classpath plugin.apt
+        classpath plugin.retrolambda
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'net.ltgt.apt'
+apply plugin: 'me.tatarka.retrolambda'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    def libs = rootProject.ext.libs
+
+    compileOnly libs.autoValue
+    apt         libs.autoValue
+
+    compile libs.retrofit
+    compile libs.retrofitRxJavaAdapter
+    compile libs.loggingInterceptor
+
+    compile libs.moshi
+    compile libs.moshiConverter
+
+    apt libs.autoValueMoshi
+    compileOnly libs.autoValueMoshi
+
+    compile libs.dagger
+    apt libs.daggerCompiler
+
+    compile libs.rxJava
+
+    compileOnly libs.jsr305
+
+    testCompile libs.junit
+    testCompile libs.mockito
+    testCompile libs.truth
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"

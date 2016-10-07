@@ -1,29 +1,111 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        def plugin = rootProject.ext.gradlePlugins
+
+        classpath plugin.androidApt
+        classpath plugin.retrolambda
+    }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    def versions = rootProject.ext.versions
+
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+
     defaultConfig {
         applicationId "com.spectrl.comix"
-        minSdkVersion 16
-        targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.code
+        versionName versions.name
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        archivesBaseName = "comix-${versions.code}"
+
+        def secretProperties = file("../secret.properties")
+        Properties props = new Properties()
+        props.load(new FileInputStream(secretProperties))
+
+        buildConfigField "String", "MARVEL_PUBLIC_KEY", "\"${props.marvel_public_key}\""
+        buildConfigField "String", "MARVEL_PRIVATE_KEY", "\"${props.marvel_private_key}\""
     }
+
+    def signingProperties = file("../signing.properties")
+
+    signingConfigs {
+        if (signingProperties.exists()) {
+            Properties props = new Properties()
+            props.load(new FileInputStream(signingProperties))
+            release {
+                storeFile file(props.storeFile)
+                storePassword props.storePass
+                keyAlias props.keyAlias
+                keyPassword props.keyPass
+            }
+        }
+    }
+
     buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            if (signingProperties.exists()) {
+                signingConfig signingConfigs.release
+            }
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile project(path: ':core')
+
+    def libs = rootProject.ext.libs
+
+    compile libs.appcompat
+    compile libs.recyclerview
+    compile libs.design
+
+    compile libs.glide
+    compile libs.glideOkHttp3
+
+    compile libs.dagger
+    apt libs.daggerCompiler
+
+    compile libs.rxAndroid
+    compile libs.rxBinding
+
+    compile libs.butterknife
+    apt libs.butterknifeCompiler
+
+    debugCompile libs.leakCanary
+    releaseCompile libs.leakCanaryNoOp
+    testCompile libs.leakCanaryNoOp
+
+    testCompile libs.junit
+    testCompile libs.mockito
+    testCompile libs.truth
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    testCompile 'junit:junit:4.12'
 }

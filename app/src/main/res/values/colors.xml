@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">@color/cerulean</color>
+    <color name="colorPrimaryDark">@color/sea_blue</color>
+    <color name="colorAccent">@color/sunset_orange</color>
+
+    <color name="sunset_orange">#FE5F55</color>
+    <color name="pale_aqua">#B8D8D8</color>
+    <color name="stormcloud">#4F6367</color>
+    <color name="beige">#EEF5DB</color>
+    <color name="cerulean">#007EA7</color>
+    <color name="sea_blue">#006889</color>
+    <color name="azure_mist">#F2FDFF</color>
+    <color name="rich_black">#00171F</color>
 </resources>
