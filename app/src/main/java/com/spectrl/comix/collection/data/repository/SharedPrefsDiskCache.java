@@ -39,7 +39,7 @@ public class SharedPrefsDiskCache implements DiskCache<String, Comics> {
     public Observable<Comics> get(String key) {
         return Observable.fromCallable(() -> {
             String json = sharedPrefs.getString(key, "");
-            return TextUtils.isEmpty(json) ? null : jsonAdapter.fromJson(json)
+            return json.isEmpty() ? null : jsonAdapter.fromJson(json)
                     .toBuilder()
                     .source(Source.DISK)
                     .build();
