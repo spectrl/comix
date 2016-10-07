@@ -1,50 +1,26 @@
 package com.spectrl.comix.collection.data.repository;
 
 import com.spectrl.comix.api.MarvelService;
-import com.spectrl.comix.api.data.model.MarvelApiResponse;
-import com.spectrl.comix.collection.data.model.Comic;
 import com.spectrl.comix.collection.data.model.Comics;
+import com.spectrl.comix.util.TestDataFactory;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.spectrl.comix.util.TestDataFactory.COMIC_LIMIT;
 import static org.mockito.Mockito.when;
 
 /**
  * Created by Kavi @ SPECTRL Ltd. on 07/10/2016.
  */
 public class RetrofitNetworkSourceTest {
-    private static final int COMIC_LIMIT = 3;
 
-    private static final List<Comic> COMIC_LIST = Arrays.asList(
-            Comic.create(0, "TITLE1", "DESCRIPTION", 100, Comic.Image.create("thumb", "ext"),
-                    Collections.singletonList(Comic.Price.create("digital", 5.00f)),
-                    Collections.singletonList(Comic.Image.create("PATH", "png")),
-                    Comic.Creators.create(Collections.singletonList(
-                            Comic.Creators.CreatorSummary.create("uri", "Kavi", "creator")))),
-            Comic.create(1, "TITLE2", "DESCRIPTION", 100, Comic.Image.create("thumb", "ext"),
-                    Collections.singletonList(Comic.Price.create("digital", 5.00f)),
-                    Collections.singletonList(Comic.Image.create("PATH", "png")),
-                    Comic.Creators.create(Collections.singletonList(
-                            Comic.Creators.CreatorSummary.create("uri", "Kavi", "creator")))),
-            Comic.create(2, "TITLE3", "DESCRIPTION", 100, Comic.Image.create("thumb", "ext"),
-                    Collections.singletonList(Comic.Price.create("digital", 5.00f)),
-                    Collections.singletonList(Comic.Image.create("PATH", "png")),
-                    Comic.Creators.create(Collections.singletonList(
-                            Comic.Creators.CreatorSummary.create("uri", "Kavi", "creator")))));
-
-    private static final MarvelApiResponse API_RESPONSE = MarvelApiResponse.create(
-            200, "test", MarvelApiResponse.Data.create(COMIC_LIMIT, COMIC_LIST));
     @Mock
     private MarvelService marvelService;
 
@@ -59,7 +35,7 @@ public class RetrofitNetworkSourceTest {
         // Get a reference to the class under test
         networkSource = new RetrofitNetworkSource(marvelService);
 
-        when(marvelService.getComics(COMIC_LIMIT)).thenReturn(Observable.just(API_RESPONSE));
+        when(marvelService.getComics(COMIC_LIMIT)).thenReturn(Observable.just(TestDataFactory.getApiResponse()));
     }
 
     @Test

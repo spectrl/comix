@@ -1,5 +1,6 @@
 package com.spectrl.comix.util;
 
+import com.spectrl.comix.api.data.model.MarvelApiResponse;
 import com.spectrl.comix.collection.data.model.Comic;
 import com.spectrl.comix.collection.data.model.Comics;
 
@@ -40,6 +41,9 @@ public class TestDataFactory {
                     Comic.Creators.create(Collections.singletonList(
                             Comic.Creators.CreatorSummary.create("uri", "Kavi", "creator")))));
 
+    private static final MarvelApiResponse API_RESPONSE = MarvelApiResponse.create(
+            200, "test", MarvelApiResponse.Data.create(COMIC_LIMIT, COMIC_LIST));
+
     public static final int PAGE_COUNT = 300;
 
     private static final Comics COMICS = builder()
@@ -48,15 +52,15 @@ public class TestDataFactory {
             .source(Source.MEMORY)
             .build();
 
-    public static List<Comic> getComicList() {
-        return COMIC_LIST;
-    }
-
     public static Comic getComic() {
         return COMIC;
     }
 
     public static Comics getComics() {
         return COMICS;
+    }
+
+    public static MarvelApiResponse getApiResponse() {
+        return API_RESPONSE;
     }
 }
