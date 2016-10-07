@@ -3,6 +3,8 @@ package com.spectrl.comix.comic;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 
 import com.spectrl.comix.BaseActivity;
 import com.spectrl.comix.R;
@@ -26,6 +28,7 @@ public class ComicActivity extends BaseActivity<ComicComponent> {
 
     private static final String EXTRA_COMIC_ID = "comic_id";
 
+    @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.comic_view) ComicView comicView;
 
     private int comicId;
@@ -42,6 +45,10 @@ public class ComicActivity extends BaseActivity<ComicComponent> {
     protected void onCreate(Bundle savedInstanceState) {
         comicId = getIntent().getIntExtra(EXTRA_COMIC_ID, -1);
         super.onCreate(savedInstanceState);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override
@@ -56,6 +63,13 @@ public class ComicActivity extends BaseActivity<ComicComponent> {
         comicPresenter.exit();
         comicPresenter.dropView(comicView);
         super.onPause();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_comic, menu);
+        return true;
     }
 
     @Override

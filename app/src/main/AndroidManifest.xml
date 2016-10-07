@@ -19,7 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".comic.ComicActivity"/>
+        <activity
+            android:name=".comic.ComicActivity"
+            android:parentActivityName=".collection.CollectionActivity"/>
 
         <meta-data
             android:name="com.spectrl.comix.util.glide.GlideConfiguration"
