@@ -8,6 +8,7 @@ import com.spectrl.comix.di.application.ApplicationComponent;
 import com.spectrl.comix.di.application.ApplicationModule;
 import com.spectrl.comix.di.application.DaggerApplicationComponent;
 import com.spectrl.comix.di.application.Injector;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by Kavi @ SPECTRL Ltd. on 22/09/2016.
@@ -19,6 +20,13 @@ public class ComixApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
 
         buildComponents();
     }

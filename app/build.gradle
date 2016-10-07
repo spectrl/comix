@@ -78,6 +78,10 @@ dependencies {
     compile libs.butterknife
     apt libs.butterknifeCompiler
 
+    debugCompile libs.leakCanary
+    releaseCompile libs.leakCanaryNoOp
+    testCompile libs.leakCanaryNoOp
+
     testCompile libs.junit
     testCompile libs.mockito
     testCompile libs.truth

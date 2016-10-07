@@ -40,6 +40,7 @@ ext {
             glide:              '3.7.0',
             glideOkHttp3:       '1.4.0',
             jsr305:             '3.0.1',
+            leakCanary:         '1.5',
 
             junit:              '4.12',
             mockito:            '2.1.0-RC.1',
@@ -80,6 +81,8 @@ ext {
             rxBinding:             "com.jakewharton.rxbinding:rxbinding:${versions.rxBinding}",
 
             jsr305:                "com.google.code.findbugs:jsr305:${versions.jsr305}",
+            leakCanary:            "com.squareup.leakcanary:leakcanary-android:${versions.leakCanary}",
+            leakCanaryNoOp:        "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakCanary}",
 
             junit:                 "junit:junit:${versions.junit}",
             mockito:               "org.mockito:mockito-core:${versions.mockito}",
